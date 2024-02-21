@@ -7,18 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		344605762B8646E400C71313 /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344605752B8646E400C71313 /* ConverterView.swift */; };
+		344605782B86476A00C71313 /* DekiUnitConveter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344605772B86476A00C71313 /* DekiUnitConveter.swift */; };
+		3446057A2B8654DF00C71313 /* LengthConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344605792B8654DF00C71313 /* LengthConverter.swift */; };
+		3446057D2B8657FB00C71313 /* TimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3446057C2B8657FB00C71313 /* TimeConverter.swift */; };
+		3446057F2B865B8600C71313 /* VolumeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3446057E2B865B8600C71313 /* VolumeConverter.swift */; };
 		3483C1242B824B4D00739339 /* Retry_Day19_ChallengeDayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483C1232B824B4D00739339 /* Retry_Day19_ChallengeDayApp.swift */; };
 		3483C1262B824B4D00739339 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483C1252B824B4D00739339 /* ContentView.swift */; };
 		3483C1282B824B4E00739339 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3483C1272B824B4E00739339 /* Assets.xcassets */; };
 		3483C12B2B824B4E00739339 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3483C12A2B824B4E00739339 /* Preview Assets.xcassets */; };
+		3483C1352B824C9900739339 /* TemperatureConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483C1342B824C9900739339 /* TemperatureConverter.swift */; };
+		3483C1382B8250AD00739339 /* TextAndPickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483C1372B8250AD00739339 /* TextAndPickers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		344605752B8646E400C71313 /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
+		344605772B86476A00C71313 /* DekiUnitConveter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DekiUnitConveter.swift; sourceTree = "<group>"; };
+		344605792B8654DF00C71313 /* LengthConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthConverter.swift; sourceTree = "<group>"; };
+		3446057C2B8657FB00C71313 /* TimeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConverter.swift; sourceTree = "<group>"; };
+		3446057E2B865B8600C71313 /* VolumeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeConverter.swift; sourceTree = "<group>"; };
 		3483C1202B824B4D00739339 /* Retry_Day19_ChallengeDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Retry_Day19_ChallengeDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3483C1232B824B4D00739339 /* Retry_Day19_ChallengeDayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Retry_Day19_ChallengeDayApp.swift; sourceTree = "<group>"; };
 		3483C1252B824B4D00739339 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3483C1272B824B4E00739339 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3483C12A2B824B4E00739339 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3483C1342B824C9900739339 /* TemperatureConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureConverter.swift; sourceTree = "<group>"; };
+		3483C1372B8250AD00739339 /* TextAndPickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAndPickers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +46,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3446057B2B8657CB00C71313 /* Converters */ = {
+			isa = PBXGroup;
+			children = (
+				3483C1342B824C9900739339 /* TemperatureConverter.swift */,
+				344605792B8654DF00C71313 /* LengthConverter.swift */,
+				3446057C2B8657FB00C71313 /* TimeConverter.swift */,
+				3446057E2B865B8600C71313 /* VolumeConverter.swift */,
+			);
+			path = Converters;
+			sourceTree = "<group>";
+		};
 		3483C1172B824B4D00739339 = {
 			isa = PBXGroup;
 			children = (
@@ -53,7 +78,9 @@
 			children = (
 				3483C1232B824B4D00739339 /* Retry_Day19_ChallengeDayApp.swift */,
 				3483C1252B824B4D00739339 /* ContentView.swift */,
+				3446057B2B8657CB00C71313 /* Converters */,
 				3483C1272B824B4E00739339 /* Assets.xcassets */,
+				3483C1362B82509C00739339 /* ReusableViews */,
 				3483C1292B824B4E00739339 /* Preview Content */,
 			);
 			path = Retry_Day19_ChallengeDay;
@@ -65,6 +92,16 @@
 				3483C12A2B824B4E00739339 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3483C1362B82509C00739339 /* ReusableViews */ = {
+			isa = PBXGroup;
+			children = (
+				3483C1372B8250AD00739339 /* TextAndPickers.swift */,
+				344605752B8646E400C71313 /* ConverterView.swift */,
+				344605772B86476A00C71313 /* DekiUnitConveter.swift */,
+			);
+			path = ReusableViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +174,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3483C1382B8250AD00739339 /* TextAndPickers.swift in Sources */,
+				3446057A2B8654DF00C71313 /* LengthConverter.swift in Sources */,
+				3483C1352B824C9900739339 /* TemperatureConverter.swift in Sources */,
+				344605782B86476A00C71313 /* DekiUnitConveter.swift in Sources */,
+				3446057F2B865B8600C71313 /* VolumeConverter.swift in Sources */,
+				344605762B8646E400C71313 /* ConverterView.swift in Sources */,
+				3446057D2B8657FB00C71313 /* TimeConverter.swift in Sources */,
 				3483C1262B824B4D00739339 /* ContentView.swift in Sources */,
 				3483C1242B824B4D00739339 /* Retry_Day19_ChallengeDayApp.swift in Sources */,
 			);

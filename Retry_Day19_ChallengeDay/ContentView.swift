@@ -9,13 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            NavigationLink("Temperature") {
+                ConverterView(converter: TemperatureConverter())
+            }
+            NavigationLink("Length") {
+                ConverterView(converter: LengthConverter())
+            }
+            NavigationLink("Time") {
+                ConverterView(converter: TimeConverter())
+            }
+            NavigationLink("Volume") {
+                ConverterView(converter: VolumeConverter())
+            }
+            
+            .navigationTitle("Deki Converters")
         }
-        .padding()
+        
     }
 }
 
