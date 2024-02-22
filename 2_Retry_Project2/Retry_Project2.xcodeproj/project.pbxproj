@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34CBC46D2B87971300C3B743 /* GuessTheFlagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CBC46C2B87971300C3B743 /* GuessTheFlagModel.swift */; };
 		34D279EC2B87897F00D55318 /* Retry_Project2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D279EB2B87897F00D55318 /* Retry_Project2App.swift */; };
 		34D279EE2B87897F00D55318 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D279ED2B87897F00D55318 /* ContentView.swift */; };
 		34D279F02B87898000D55318 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D279EF2B87898000D55318 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34CBC46C2B87971300C3B743 /* GuessTheFlagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTheFlagModel.swift; sourceTree = "<group>"; };
 		34D279E82B87897F00D55318 /* Retry_Project2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Retry_Project2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D279EB2B87897F00D55318 /* Retry_Project2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Retry_Project2App.swift; sourceTree = "<group>"; };
 		34D279ED2B87897F00D55318 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				34D279EB2B87897F00D55318 /* Retry_Project2App.swift */,
 				34D279ED2B87897F00D55318 /* ContentView.swift */,
+				34CBC46C2B87971300C3B743 /* GuessTheFlagModel.swift */,
 				34D279EF2B87898000D55318 /* Assets.xcassets */,
 				34D279F12B87898000D55318 /* Preview Content */,
 			);
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D279EE2B87897F00D55318 /* ContentView.swift in Sources */,
+				34CBC46D2B87971300C3B743 /* GuessTheFlagModel.swift in Sources */,
 				34D279EC2B87897F00D55318 /* Retry_Project2App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
