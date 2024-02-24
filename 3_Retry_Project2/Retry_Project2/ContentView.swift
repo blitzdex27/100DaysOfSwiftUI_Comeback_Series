@@ -76,6 +76,7 @@ struct ContentView: View {
         HStack {
             Text("Points:")
                 .font(.title)
+                .largeBlueFont()
             Text(String(points))
                 .font(.largeTitle.bold())
                 .foregroundStyle(.white)
@@ -88,8 +89,7 @@ struct ContentView: View {
                 Button(action: {
                     didTapFlag(of: choice)
                 }, label: {
-                    Image(choice.rawValue, bundle: .main)
-                        .resizable()
+                    FlagImage(flag: choice)
                 })
                 .clipShape(.capsule)
                 .padding(.horizontal, 20)
@@ -112,6 +112,16 @@ struct ContentView: View {
         }
         
         isShowAlert = true
+    }
+    
+    
+}
+
+struct FlagImage: View {
+    let flag: GuessTheFlag.Flag
+    var body: some View {
+        Image(flag.rawValue, bundle: .main)
+            .resizable()
     }
 }
 

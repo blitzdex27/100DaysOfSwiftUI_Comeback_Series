@@ -11,7 +11,7 @@ struct ContentView: View {
     
     @State var billAmount: Double = 0.0
     
-    var tipPercentages = [0.1, 0.15, 0.2, 0.25, 0.3]
+    var tipPercentages = [0, 0.15, 0.2, 0.25, 0.3]
     
     var numberOfPeopleOptions = [1, 2, 3, 4]
     
@@ -52,7 +52,7 @@ struct ContentView: View {
 
                 
                 AmountSection(header: "Amount per person", value: amountPerPerson)
-                AmountSection(header: "Total amount", value: totalAmount)
+                AmountSection(header: "Total amount", value: totalAmount, valueForegroundStyle: selectedTipPercentage > 0 ? HierarchicalShapeStyle.primary : Color.red)
                 
             }
             .navigationTitle("WeSplit")
@@ -64,10 +64,17 @@ struct ContentView: View {
 struct AmountSection: View {
     let header: String
     let value: Double
+    let valueForegroundStyle: any ShapeStyle
     
+    init(header: String, value: Double, valueForegroundStyle: any ShapeStyle = HierarchicalShapeStyle.primary) {
+        self.header = header
+        self.value = value
+        self.valueForegroundStyle = valueForegroundStyle
+    }
     var body: some View {
         Section {
             Text(value, format: .currency(code: "PHP"))
+                .foregroundStyle(valueForegroundStyle)
         } header: {
             Text(header)
         }
