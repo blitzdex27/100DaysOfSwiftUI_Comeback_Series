@@ -11,7 +11,7 @@ import SwiftUI
 struct __Retry_Day25_MilestoneApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(game: Janken.Game())
         }
     }
 }
