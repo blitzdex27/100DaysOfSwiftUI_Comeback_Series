@@ -22,7 +22,7 @@ enum Janken {
             self.rounds = rounds
         }
         
-        mutating func startRoundBattle() {
+        mutating func startRoundBattle() -> Moves.BattleResult? {
             currentRound.battle()
         }
         
@@ -34,6 +34,10 @@ enum Janken {
             rounds.append(currentRound)
             let nextRound = Round(points: 0, number: currentRound.number + 1, enemyMove: .randomMove, playerMove: nil, battleResult: nil)
             currentRound = nextRound
+        }
+        
+        mutating func chooseMove(_ move: Janken.Moves) {
+            currentRound.chooseMove(move)
         }
         
         struct Round {
@@ -48,7 +52,7 @@ enum Janken {
             }
             
             
-            @discardableResult
+//            @discardableResult
             mutating func battle() -> Moves.BattleResult? {
                 guard let battleResult = playerMove?.battle(with: enemyMove) else {
                     return nil
