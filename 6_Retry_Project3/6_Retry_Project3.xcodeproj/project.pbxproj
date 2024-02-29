@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		34B1A9432B8F7F3A00CA67A1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B1A9422B8F7F3A00CA67A1 /* ContentView.swift */; };
 		34B1A9452B8F7F3B00CA67A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B1A9442B8F7F3B00CA67A1 /* Assets.xcassets */; };
 		34B1A9482B8F7F3B00CA67A1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B1A9472B8F7F3B00CA67A1 /* Preview Assets.xcassets */; };
+		500512912B913DDD00098C49 /* SleepCalculator.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 500512902B913DDD00098C49 /* SleepCalculator.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		34B1A9422B8F7F3A00CA67A1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		34B1A9442B8F7F3B00CA67A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34B1A9472B8F7F3B00CA67A1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		500512902B913DDD00098C49 /* SleepCalculator.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = SleepCalculator.mlmodel; path = ML/SleepCalculator.mlmodel; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				34B1A9402B8F7F3A00CA67A1 /* __Retry_Project3App.swift */,
+				500512902B913DDD00098C49 /* SleepCalculator.mlmodel */,
 				34B1A9422B8F7F3A00CA67A1 /* ContentView.swift */,
 				34B1A9442B8F7F3B00CA67A1 /* Assets.xcassets */,
 				34B1A9462B8F7F3B00CA67A1 /* Preview Content */,
@@ -103,7 +106,7 @@
 				};
 			};
 			buildConfigurationList = 34B1A9382B8F7F3A00CA67A1 /* Build configuration list for PBXProject "6_Retry_Project3" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -139,6 +142,7 @@
 			files = (
 				34B1A9432B8F7F3A00CA67A1 /* ContentView.swift in Sources */,
 				34B1A9412B8F7F3A00CA67A1 /* __Retry_Project3App.swift in Sources */,
+				500512912B913DDD00098C49 /* SleepCalculator.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,7 +201,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -254,7 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
