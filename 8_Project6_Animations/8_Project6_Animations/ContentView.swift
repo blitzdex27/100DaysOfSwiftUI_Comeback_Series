@@ -7,31 +7,51 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    
-    @State private var rotation = 0.0
-    
-    var body: some View {
-        Button("Tap me") {
-            withAnimation(.spring(duration: 1, bounce: 0.8)) {
-                
-                rotation += 180
-            }
-        }
-        .padding(50)
-        .background(.red)
-        .foregroundStyle(.white)
-        .font(.title)
-        .clipShape(.circle)
-        .rotation3DEffect(
-            .degrees(rotation), axis: (x: 0.0, y: 1.0, z: 0.0)
-        )
+struct CornerRotationModifier: ViewModifier {
+    var amount: Double
+    var anchor: UnitPoint
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.degrees(amount), anchor: anchor)
+            .clipped()
     }
 }
 
-#Preview {
-    ContentView()
+extension AnyTransition {
+    static var pivot: AnyTransition {
+        modifier(active: CornerRotationModifier(amount: -90, anchor: .topLeading), identity: CornerRotationModifier(amount: 0, anchor: .zero))
+    }
 }
+
+struct ContentView: View {
+    
+    @State private var isShowingRed = false
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(.blue)
+                .frame(width: 200, height: 200)
+                
+            if isShowingRed {
+                Rectangle()
+                    .fill(.red)
+                    .frame(width: 200, height: 200)
+                    .transition(.scale)
+            }
+        }
+        .onTapGesture {
+            withAnimation {
+                isShowingRed.toggle()
+            }
+            
+        }
+    }
+}
+
+//#Preview {
+//    ContentView()
+//}
 
 
 
