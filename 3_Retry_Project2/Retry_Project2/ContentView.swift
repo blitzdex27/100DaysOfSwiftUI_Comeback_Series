@@ -11,6 +11,8 @@ struct ContentView: View {
     
     @State var game: GuessTheFlag.Game = GuessTheFlag.Game()
     
+    @State var tappedFlag: GuessTheFlag.Flag? = nil
+    
     var round: GuessTheFlag.Game.Round {
         game.currentRound
     }
@@ -42,8 +44,11 @@ struct ContentView: View {
         }
         .alert(alertTitle, isPresented: $isShowAlert, presenting: round) { round in
             Button("OK") {
-                game.proceedToNextRound()
-                points = game.totalPoints
+                withAnimation {
+                    game.proceedToNextRound()
+                    points = game.totalPoints
+                    tappedFlag = nil
+                }
             }
         } message: { round in
             HStack {
@@ -87,13 +92,20 @@ struct ContentView: View {
             
             ForEach(flagChoices, id: \.self) { choice in
                 Button(action: {
+                    withAnimation(.linear(duration: 1)) {
+                        tappedFlag = choice
+                    }
                     didTapFlag(of: choice)
                 }, label: {
                     FlagImage(flag: choice)
                 })
-                .clipShape(.capsule)
+                .clipShape(Capsule())
                 .padding(.horizontal, 20)
                 .padding(.vertical, 5)
+                .rotation3DEffect(.degrees(choice == tappedFlag ? 360 : 0), axis: (0, 1, 0))
+                .opacity(choice == tappedFlag ? 1 : 0.25)
+                .transition(.scale)
+                .scaleEffect(choice == tappedFlag ? 1 : 0.75)
             }
             
         }
@@ -125,6 +137,6 @@ struct FlagImage: View {
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}
