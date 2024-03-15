@@ -38,19 +38,32 @@ struct ContentView: View {
 
     @State var expenses = Expenses()
     
+    @State var currency = "USD"
+    
+    var currencies = ["USD", "PHP"]
+    
+    
     @State var isShowingAddExpense = false
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses.items) { item in
-                    HStack {
-                        Text(item.name)
-                        Spacer()
-                        Text(item.amount, format:.currency(code: "PHP"))
+                HStack {
+                    Picker("Currency", selection: $currency) {
+                        ForEach(currencies, id: \.self) { currency in
+                            Text(currency)
+                        }
                     }
+                    
+                    
+                    
                 }
-                .onDelete(perform: handleDelete(at:))
+                Section("Personal") {
+                    personalExpenses
+                }
+                Section("Business") {
+                    businessExpenses
+                }
             }
             .navigationTitle("Expense tracker")
             .toolbar {
@@ -59,14 +72,65 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddExpense, content: {
-                AddView(expense: expenses)
+                AddView(expense: expenses, currencyCode: currency)
             })
         }
         
     }
     
+    var personalExpenses: some View {
+        ForEach(expenses.items) { item in
+            if item.type == "Personal"  {
+                HStack {
+                    Text(item.name)
+                    Spacer()
+                    Text(item.amount, format:.currency(code: currency))
+                        .applyAmountStyle(for: item.amount)
+                }
+            }
+            
+        }
+        .onDelete(perform: handleDelete(at:))
+    }
+    var businessExpenses: some View {
+        ForEach(expenses.items) { item in
+            if item.type == "Business"  {
+                HStack {
+                    Text(item.name)
+                    Spacer()
+                    Text(item.amount, format:.currency(code: currency))
+                        .applyAmountStyle(for: item.amount)
+                }
+            }
+        }
+        .onDelete(perform: handleDelete(at:))
+    }
+    
+    
     func handleDelete(at indexSet: IndexSet) {
         expenses.items.remove(atOffsets: indexSet)
+    }
+}
+
+struct AmountStyleModifier: ViewModifier {
+    let amount: Double
+    func body(content: Content) -> some View {
+        switch amount {
+        case ..<10:
+            content.foregroundStyle(.green)
+        case 10..<100:
+            content.foregroundStyle(.orange)
+        case 100...:
+            content.foregroundStyle(.red)
+        default:
+            content.foregroundStyle(.secondary)
+        }
+    }
+}
+
+extension Text {
+    func applyAmountStyle(for amount: Double) -> some View {
+        return modifier(AmountStyleModifier(amount: amount))
     }
 }
 

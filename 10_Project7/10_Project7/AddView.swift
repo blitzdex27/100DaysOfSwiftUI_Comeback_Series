@@ -11,6 +11,7 @@ struct AddView: View {
     @Environment(\.dismiss) var dismiss
     
     let expense: Expenses
+    let currencyCode: String
     
     @State var name: String = ""
     @State var type: String = "Personal"
@@ -27,7 +28,7 @@ struct AddView: View {
                         Text(typeOption)
                     }
                 }
-                TextField("Amount", value: $amount, format: .currency(code: "PHP"))
+                TextField("Amount", value: $amount, format: .currency(code: currencyCode))
             }
             .navigationTitle("Add new expense")
             .toolbar(content: {
@@ -42,5 +43,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expense: Expenses())
+    AddView(expense: Expenses(), currencyCode: "USD")
 }
