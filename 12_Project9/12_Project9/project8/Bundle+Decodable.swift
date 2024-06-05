@@ -8,7 +8,7 @@
 import Foundation
 
 extension Bundle {
-    func decode(_ file: String) -> [String: Astronaut] {
+    func decode<T: Decodable>(_ file: String, type: T.Type, dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601) -> T {
         guard let url = self.url(forResource: file, withExtension: nil) else {
             fatalError()
         }
@@ -17,10 +17,12 @@ extension Bundle {
             fatalError()
         }
         
-        guard let astronauts = try? JSONDecoder().decode([String: Astronaut].self, from: data) else {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = dateDecodingStrategy
+        guard let decoded = try? decoder.decode(T.self, from: data) else {
             fatalError()
         }
         
-        return astronauts
+        return decoded
     }
 }

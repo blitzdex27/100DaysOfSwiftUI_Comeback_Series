@@ -15,6 +15,11 @@
 		3417285A2C0F633B00AAE5B9 /* astronauts.json in Resources */ = {isa = PBXBuildFile; fileRef = 341728552C0F633B00AAE5B9 /* astronauts.json */; };
 		3417285B2C0F633B00AAE5B9 /* Bundle+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341728562C0F633B00AAE5B9 /* Bundle+Decodable.swift */; };
 		3417285C2C0F633B00AAE5B9 /* missions.json in Resources */ = {isa = PBXBuildFile; fileRef = 341728572C0F633B00AAE5B9 /* missions.json */; };
+		34EF5FEB2C10B184005EB414 /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF5FEA2C10B184005EB414 /* Mission.swift */; };
+		34EF5FED2C10B85F005EB414 /* AstronautCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF5FEC2C10B85F005EB414 /* AstronautCell.swift */; };
+		34EF5FEF2C10C049005EB414 /* MissionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF5FEE2C10C049005EB414 /* MissionCell.swift */; };
+		34EF5FF12C10C409005EB414 /* Moonshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF5FF02C10C409005EB414 /* Moonshot.swift */; };
+		34EF5FF32C10C750005EB414 /* MissionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF5FF22C10C750005EB414 /* MissionDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +36,11 @@
 		341728552C0F633B00AAE5B9 /* astronauts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = astronauts.json; sourceTree = "<group>"; };
 		341728562C0F633B00AAE5B9 /* Bundle+Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Decodable.swift"; sourceTree = "<group>"; };
 		341728572C0F633B00AAE5B9 /* missions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = missions.json; sourceTree = "<group>"; };
+		34EF5FEA2C10B184005EB414 /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
+		34EF5FEC2C10B85F005EB414 /* AstronautCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronautCell.swift; sourceTree = "<group>"; };
+		34EF5FEE2C10C049005EB414 /* MissionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionCell.swift; sourceTree = "<group>"; };
+		34EF5FF02C10C409005EB414 /* Moonshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moonshot.swift; sourceTree = "<group>"; };
+		34EF5FF22C10C750005EB414 /* MissionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +98,14 @@
 			isa = PBXGroup;
 			children = (
 				341728542C0F633B00AAE5B9 /* Astronaut.swift */,
-				341728552C0F633B00AAE5B9 /* astronauts.json */,
+				34EF5FEA2C10B184005EB414 /* Mission.swift */,
 				341728562C0F633B00AAE5B9 /* Bundle+Decodable.swift */,
+				341728552C0F633B00AAE5B9 /* astronauts.json */,
 				341728572C0F633B00AAE5B9 /* missions.json */,
+				34EF5FEC2C10B85F005EB414 /* AstronautCell.swift */,
+				34EF5FEE2C10C049005EB414 /* MissionCell.swift */,
+				34EF5FF22C10C750005EB414 /* MissionDetail.swift */,
+				34EF5FF02C10C409005EB414 /* Moonshot.swift */,
 			);
 			path = project8;
 			sourceTree = "<group>";
@@ -167,10 +182,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34EF5FF12C10C409005EB414 /* Moonshot.swift in Sources */,
 				340B4A182BD55E2A00BBCDD8 /* ContentView.swift in Sources */,
+				34EF5FEF2C10C049005EB414 /* MissionCell.swift in Sources */,
+				34EF5FED2C10B85F005EB414 /* AstronautCell.swift in Sources */,
 				3417285B2C0F633B00AAE5B9 /* Bundle+Decodable.swift in Sources */,
 				340B4A162BD55E2A00BBCDD8 /* _2_Project9App.swift in Sources */,
+				34EF5FEB2C10B184005EB414 /* Mission.swift in Sources */,
 				341728592C0F633B00AAE5B9 /* Astronaut.swift in Sources */,
+				34EF5FF32C10C750005EB414 /* MissionDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
