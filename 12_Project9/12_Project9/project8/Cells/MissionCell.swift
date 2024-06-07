@@ -10,15 +10,19 @@ import SwiftUI
 struct MissionCell: View {
     var mission: Mission
     var body: some View {
-        HStack {
+        VStack {
             Image(mission.imageName)
                 .resizable()
                 .scaledToFit()
                 .containerRelativeFrame(.horizontal) { size, alignment in
                     size * 0.2
                 }
-            Text(mission.description)
-                
+            VStack {
+                Text(mission.name)
+                    .font(.headline)
+                Text(mission.formattedLaunchDate ?? "N/A")
+                    .font(.caption)
+            }
         }
     }
 }
