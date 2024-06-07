@@ -212,16 +212,40 @@
         "launchDate": "1972-12-07",
 		"crew": [
             {
-                "name": "cernan",
+                "name": "schirra",
                 "role": "Commander"
             },
             {
-                "name": "evans",
+                "name": "eisele",
                 "role": "Command Module Pilot"
             },
             {
-                "name": "schmitt",
+                "name": "cunningham",
                 "role": "Lunar Module Pilot"
+            },
+            {
+                "name": "young",
+                "role": "Commander"
+            },
+            {
+                "name": "mattingly",
+                "role": "Command Module Pilot"
+            },
+            {
+                "name": "duke",
+                "role": "Lunar Module Pilot"
+            },
+            {
+                "name": "scott",
+                "role": "Commander"
+            },
+            {
+                "name": "worden",
+                "role": "Command module pilot"
+            },
+            {
+                "name": "irwin",
+                "role": "Lunar module pilot"
             }
 		],
 		"description": "Apollo 17 (December 7–19, 1972) was the final mission of NASA's Apollo program; it remains the most recent time humans have travelled beyond low Earth orbit. Its crew consisted of Commander Eugene Cernan, Lunar Module Pilot Harrison Schmitt, and Command Module Pilot Ronald Evans, and it carried a biological experiment containing five mice.\n\nLaunched at 12:33 a.m. Eastern Standard Time (EST) on December 7, 1972, Apollo 17 was a \"J-type mission\" that included three days on the lunar surface, extended scientific capability, and the use of the third Lunar Roving Vehicle (LRV)."

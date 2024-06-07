@@ -24,6 +24,7 @@ struct CrewCell: View {
                 .font(.caption2)
         }
         
+        
     }
 }
 
@@ -34,14 +35,14 @@ struct CrewCell: View {
                         "role": "Commander"
                     }
     """#
-    var astronaut = Crew(name: "", role: "")
+    var crew = Crew(name: "", role: "")
     let data = Data(crewData.utf8)
     do {
         let decoded = try JSONDecoder().decode(Crew.self, from: data)
-        astronaut = decoded
+        crew = decoded
     } catch {
         print(error)
     }
 
-    return CrewCell(crew: astronaut)
+    return CrewCell(crew: crew)
 }

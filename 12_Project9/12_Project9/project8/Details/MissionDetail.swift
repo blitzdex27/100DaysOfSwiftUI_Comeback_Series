@@ -11,8 +11,6 @@ struct MissionDetail: View {
     
     let mission: Mission
     
-    
-    
     var body: some View {
         List {
             if let launchDate = mission.formattedLaunchDate {
@@ -30,18 +28,10 @@ struct MissionDetail: View {
                 ScrollView(.horizontal, showsIndicators: false)  {
                     LazyHGrid(rows: [GridItem(.adaptive(minimum: 100))]) {
                         ForEach(mission.crew, id: \.self.name) { crew in
-                            VStack {
-                                Image(crew.name)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100)
-                                    .clipShape(.circle)
-                                Text(crew.name.capitalized)
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                Text(crew.role)
-                                    .font(.caption2)
+                            NavigationLink(value: crew) {
+                                CrewCell(crew: crew)
                             }
+                            
                         }
                     }
                 }
@@ -50,7 +40,11 @@ struct MissionDetail: View {
             }
         }
         .scrollIndicators(.hidden)
+        .listStyle(.grouped)
         .navigationTitle(mission.name)
+        .navigationDestination(for: Crew.self) { crew in
+            AstronautDetail(name: crew.name)
+        }
     }
 }
 

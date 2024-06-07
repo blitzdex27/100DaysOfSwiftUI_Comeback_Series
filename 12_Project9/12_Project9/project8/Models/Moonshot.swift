@@ -10,7 +10,8 @@ import Foundation
 enum Moonshot {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "y-MM-dd"
+//        formatter.dateStyle = .short
         return formatter
     }()
 }

@@ -16,11 +16,35 @@ struct Mission: Codable, Identifiable {
     var imageName: String {
         "apollo\(id)"
     }
+    
+    var formattedLaunchDate: String? {
+        
+        launchDate?.formatted(date: .abbreviated, time: .omitted)
+    }
+    
+    var name: String {
+        "Apollo \(id)"
+    }
+}
+
+extension Mission: Hashable {
+    static func == (lhs: Mission, rhs: Mission) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        let hashStr = "\(id)_\(formattedLaunchDate ?? "")_\(imageName)_\(description)"
+        hasher.combine(hashStr)
+    }
 }
 
 struct Crew: Codable {
     var name: String
     var role: String
+}
+
+extension Crew: Hashable {
+    
 }
 
 /*
