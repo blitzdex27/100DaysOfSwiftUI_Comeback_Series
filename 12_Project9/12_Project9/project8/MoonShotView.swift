@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MoonShotView: View {
+    
 
     let missions = Bundle.main.decode("missions.json", type: [Mission].self, dateDecodingStrategy: .formatted(.moonShotDateFormatter))
     
@@ -27,11 +28,6 @@ struct MoonShotView: View {
                         NavigationLink(value: mission) {
                             MissionCell(mission: mission)
                         }
-//                        NavigationLink {
-//                            MissionDetail(mission: mission)
-//                        } label: {
-//                            MissionCell(mission: mission)
-//                        }
                     }
                     .frame(maxHeight: 100)
                 }

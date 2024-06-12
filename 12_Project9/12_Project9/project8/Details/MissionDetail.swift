@@ -45,6 +45,11 @@ struct MissionDetail: View {
         .navigationDestination(for: Crew.self) { crew in
             AstronautDetail(name: crew.name)
         }
+        
+        
+        .toolbar(content: {
+            EditButton()
+        })
     }
 }
 
