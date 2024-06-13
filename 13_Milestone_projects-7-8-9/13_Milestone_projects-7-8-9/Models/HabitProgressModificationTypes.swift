@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum HabitProgressModification {
+    case increment(Int)
+    case decrement(Int)
+}

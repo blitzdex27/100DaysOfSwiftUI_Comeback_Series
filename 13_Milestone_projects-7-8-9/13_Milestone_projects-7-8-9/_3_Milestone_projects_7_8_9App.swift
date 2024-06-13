@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct _3_Milestone_projects_7_8_9App: App {
+    
+    private let habitStore = HabitStore()
+    
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.habits, habitStore.habits)
+                .environment(\.habitStore, habitStore)
         }
     }
 }

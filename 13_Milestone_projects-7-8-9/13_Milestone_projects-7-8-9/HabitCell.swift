@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct HabitCell: View {
+    
+    @Bindable var habit: Habit
+    
+    init(habit: Habit) {
+        self.habit = habit
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationLink(value: habit) {
+            VStack(alignment:.leading) {
+                Text(habit.id)
+                    .font(.caption)
+                HStack {
+                    Text(habit.name)
+                    Spacer()
+                    Text("Progress: \(habit.completionCount)")
+                }
+                
+            }
+        }
+        .navigationDestination(for: Habit.self) { habit in
+            @Bindable var habit = habit
+            HabitDetailView(habit: habit)
+        }
+        
     }
 }
 
 #Preview {
-    HabitCell()
+    HabitCell(habit: .init(name: "Test", description: "test"))
 }
