@@ -27,6 +27,8 @@ struct HabitCell: View {
                 }
                 
             }
+            
+            .foregroundStyle(.white)
         }
         .navigationDestination(for: Habit.self) { habit in
             @Bindable var habit = habit

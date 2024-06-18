@@ -15,17 +15,15 @@ struct AddHabitView: View {
     var body: some View {
         NavigationStack {
             List {
-                HStack {
+                Section("Name") {
                     TextField(text: $name, prompt: Text("Enter habit name")) {
-                        Text("Name")
                     }
                 }
-                HStack {
-                    TextField(text: $description, prompt: Text("Enter some description")) {
-                        Text("Description")
-                    }
+                Section("Description") {
+                    TextEditor(text: $description)
                 }
             }
+            .background(.green)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Confirm") {

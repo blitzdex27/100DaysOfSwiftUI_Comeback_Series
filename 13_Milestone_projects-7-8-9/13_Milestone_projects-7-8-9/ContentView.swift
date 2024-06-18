@@ -23,7 +23,7 @@ struct ContentView: View {
                     .onDelete(perform: { indexSet in
                         habits.items.remove(atOffsets: indexSet)
                     })
-                    
+                    .listRowBackground(Color.brown)
                 }
                 .navigationTitle("Habit Tracker")
                 .toolbar {
@@ -40,8 +40,9 @@ struct ContentView: View {
                 .sheet(isPresented: $isAddHabitShowing, content: {
                     AddHabitView()
                 })
-                .background(.red)
                 .listItemTint(.blue)
+                .scrollContentBackground(.hidden)
+                .background(.yellow)
             }
         }
     }

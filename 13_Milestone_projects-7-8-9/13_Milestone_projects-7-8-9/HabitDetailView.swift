@@ -28,7 +28,7 @@ struct HabitDetailView: View {
         }
         .navigationTitle(habit.name)
         .padding()
-        .background(.cyan)
+        .background(.yellow)
         
     }
     
