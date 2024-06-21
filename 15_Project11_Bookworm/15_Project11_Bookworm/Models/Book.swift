@@ -18,6 +18,7 @@ class Book {
     var genre: String
     var review: String
     var rating: Int
+    var date = Date() /// Challenge 3
     
     /// Challenge 1
     var isValidBookEntry: Bool {

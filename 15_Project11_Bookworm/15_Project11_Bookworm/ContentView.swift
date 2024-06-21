@@ -40,6 +40,8 @@ struct ContentView: View {
                                     Text(book.author)
                                         .foregroundStyle(.secondary)
                                 }
+                                /// Challenge 2
+                                .foregroundStyle(book.rating == 1 ? .red : .primary)
                                 
                             }
                         }

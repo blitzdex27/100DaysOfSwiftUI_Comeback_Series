@@ -15,21 +15,39 @@ struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showingDeleteAlert = false
     
+    /// Challenge 3
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        return formatter
+    }()
     var body: some View {
+        /// Challenge 3
         ScrollView {
-            ZStack(alignment: .bottomTrailing) {
-                Image(book.genre)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
-                Text(book.genre.uppercased())
+            ZStack(alignment: .topLeading) {
+                
+                ZStack(alignment: .bottomTrailing) {
+                    Image(book.genre)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea()
+                    Text(book.genre.uppercased())
+                        .font(.caption)
+                        .fontWeight(.black)
+                        .padding(8)
+                        .foregroundStyle(.white)
+                        .background(.black.opacity(0.75))
+                        .clipShape(.capsule)
+                        .offset(x: -5, y: -5)
+                }
+                Text(book.date, formatter: dateFormatter)
                     .font(.caption)
-                    .fontWeight(.black)
-                    .padding(8)
-                    .foregroundStyle(.white)
-                    .background(.black.opacity(0.75))
+                    .italic()
+                    .padding(7)
+                    .background(.black.opacity(0.4))
                     .clipShape(.capsule)
-                    .offset(x: -5, y: -5)
+                    .foregroundStyle(.white.opacity(0.7))
+                    .offset(x: 5, y: 5)
             }
             Text(book.author)
                 .font(.title)
