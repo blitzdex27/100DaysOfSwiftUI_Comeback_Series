@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddressView: View {
+    @Environment(\.orderStore) var orderStore
     @Bindable var order: Order
     
     var body: some View {
@@ -20,7 +21,8 @@ struct AddressView: View {
             }
             Section {
                 NavigationLink("Check out") {
-                    CheckoutView(order: order)
+                    orderStore.save()
+                    return CheckoutView(order: order)
                 }
                 .disabled(!order.hasValidAddress)
             }

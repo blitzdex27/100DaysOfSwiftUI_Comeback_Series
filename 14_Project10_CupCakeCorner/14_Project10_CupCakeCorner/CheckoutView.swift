@@ -14,6 +14,10 @@ struct CheckoutView: View {
     @State private var confirmationMessage = ""
     @State private var showingConfirmation = false
     
+    /// Challenge: 2. If our call to placeOrder() fails – for example if there is no internet connection – show an informative alert for the user. To test this, try commenting out the request.httpMethod = "POST" line in your code, which should force the request to fail.
+    @State private var showingError = false
+    @State private var errorMessage = ""
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -47,11 +51,15 @@ struct CheckoutView: View {
         }
         .scrollBounceBehavior(.basedOnSize)
         .alert("Thank you!", isPresented: $showingConfirmation) {
-            Button("Ok") {
-                
-            }
+            Button("Ok") { }
         } message: {
             Text(confirmationMessage)
+        }
+        /// Challenge: 2. If our call to placeOrder() fails – for example if there is no internet connection – show an informative alert for the user. To test this, try commenting out the request.httpMethod = "POST" line in your code, which should force the request to fail.
+        .alert("Error", isPresented: $showingError) {
+            Button("Ok") { }
+        } message: {
+            Text(errorMessage)
         }
     }
     
@@ -64,6 +72,8 @@ struct CheckoutView: View {
         let url = URL(string: "https://reqres.in/api/cupcakesss")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        /// Challenge: 2. If our call to placeOrder() fails – for example if there is no internet connection – show an informative alert for the user. To test this, try commenting out the request.httpMethod = "POST" line in your code, which should force the request to fail.
         request.httpMethod = "POST"
         
         do {
@@ -72,7 +82,9 @@ struct CheckoutView: View {
             confirmationMessage = "Your order for \(decodedOrder.count)x \(Order.options[decodedOrder.type].lowercased()) cupcakes is on its way!"
             showingConfirmation = true
         } catch {
-            print("Checkout fialed: \(error.localizedDescription)")
+            /// Challenge: 2. If our call to placeOrder() fails – for example if there is no internet connection – show an informative alert for the user. To test this, try commenting out the request.httpMethod = "POST" line in your code, which should force the request to fail.
+            errorMessage = error.localizedDescription
+            showingError = true
         }
     }
 }

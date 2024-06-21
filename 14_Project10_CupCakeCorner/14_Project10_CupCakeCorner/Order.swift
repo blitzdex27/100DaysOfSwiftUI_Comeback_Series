@@ -12,6 +12,8 @@ import Foundation
 class Order: Codable {
     static let options = ["Vanilla", "Strawberry", "Chocolate", "Rainbow"]
     
+    let id = UUID()
+    
     var type = 0
     var count = 2
     var hasSpecialRequest = false {
@@ -29,7 +31,8 @@ class Order: Codable {
     var zip = ""
     
     var hasValidAddress: Bool {
-        if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
+        /// Challenge 1: Our address fields are currently considered valid if they contain anything, even if it’s just only whitespace. Improve the validation to make sure a string of pure whitespace is invalid.
+        if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || streetAddress.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || zip.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return false
         }
         return true
@@ -68,6 +71,14 @@ class Order: Codable {
     }
 }
 
-extension Order {
 
+
+extension Order: Hashable {
+    static func == (lhs: Order, rhs: Order) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

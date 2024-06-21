@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct _4_Project10_CupCakeCornerApp: App {
+    
+    private let orderStore = OrderStore()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView(order: Order())
+            ContentView(order: orderStore.order)
+                .environment(\.orderStore, orderStore)
         }
     }
 }
