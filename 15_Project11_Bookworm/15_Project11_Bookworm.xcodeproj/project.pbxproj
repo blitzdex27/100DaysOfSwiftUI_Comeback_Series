@@ -15,6 +15,7 @@
 		346D613C2C2552C600C182E1 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346D613B2C2552C600C182E1 /* AddBookView.swift */; };
 		346D613F2C2557A200C182E1 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346D613E2C2557A200C182E1 /* RatingView.swift */; };
 		34B8C4A42C25928100BD7396 /* EmojiRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B8C4A32C25928100BD7396 /* EmojiRatingView.swift */; };
+		34B8C4A62C25960100BD7396 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B8C4A52C25960100BD7396 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		346D613B2C2552C600C182E1 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
 		346D613E2C2557A200C182E1 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		34B8C4A32C25928100BD7396 /* EmojiRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiRatingView.swift; sourceTree = "<group>"; };
+		34B8C4A52C25960100BD7396 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				346D613B2C2552C600C182E1 /* AddBookView.swift */,
 				346D613E2C2557A200C182E1 /* RatingView.swift */,
 				34B8C4A32C25928100BD7396 /* EmojiRatingView.swift */,
+				34B8C4A52C25960100BD7396 /* DetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				346D612D2C25510800C182E1 /* ContentView.swift in Sources */,
 				346D612B2C25510800C182E1 /* _5_Project11_BookwormApp.swift in Sources */,
 				346D613A2C25520E00C182E1 /* Book.swift in Sources */,
+				34B8C4A62C25960100BD7396 /* DetailView.swift in Sources */,
 				346D613F2C2557A200C182E1 /* RatingView.swift in Sources */,
 				34B8C4A42C25928100BD7396 /* EmojiRatingView.swift in Sources */,
 				346D613C2C2552C600C182E1 /* AddBookView.swift in Sources */,
