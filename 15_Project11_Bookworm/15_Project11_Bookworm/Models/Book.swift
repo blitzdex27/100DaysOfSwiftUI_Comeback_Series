@@ -10,6 +10,8 @@ import SwiftData
 
 @Model
 class Book {
+    
+    static let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
 //    var id = UUID()
     var title: String
     var author: String
@@ -17,7 +19,18 @@ class Book {
     var review: String
     var rating: Int
     
-    init(title: String, author: String, genre: String, review: String, rating: Int) {
+    /// Challenge 1
+    var isValidBookEntry: Bool {
+        isValidTitle
+    }
+    /// Challenge 1
+    var isValidTitle: Bool {
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    
+    
+    init(title: String, author: String = "Anonymous", genre: String, review: String, rating: Int) {
         self.title = title
         self.author = author
         self.genre = genre

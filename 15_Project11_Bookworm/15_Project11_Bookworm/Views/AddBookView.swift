@@ -17,17 +17,24 @@ struct AddBookView: View {
     @State private var genre = "Fantasy"
     @State private var review = ""
     
-    let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
+    /// Challenge 1
+    @State private var isTitleValid = true
     
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     TextField("Name of book", text: $title)
+                        .textFieldStyle(.roundedBorder)
+                        .border(isTitleValid ? .clear : .red)
+                        .onChange(of: title) { oldValue, newValue in
+                            isTitleValid = true
+                        }
+                        
                     TextField("Author's name", text: $author)
                     
                     Picker("Genre", selection: $genre) {
-                        ForEach(genres, id: \.self) {
+                        ForEach(Book.genres, id: \.self) {
                             Text($0)
                         }
                     }
@@ -42,8 +49,13 @@ struct AddBookView: View {
                     Button("Save") {
                         // add the book
                         let newBook = Book(title: title, author: author, genre: genre, review: review, rating: rating)
-                        modelContext.insert(newBook)
-                        dismiss()
+                        if newBook.isValidBookEntry {
+                            modelContext.insert(newBook)
+                            dismiss()
+                        } else {
+                            /// Challenge 1
+                            isTitleValid = false
+                        }
                     }
                 }
             }
