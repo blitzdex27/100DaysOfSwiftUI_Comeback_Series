@@ -16,7 +16,27 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            Text("Count: \(books.count)")
+            VStack {
+                Text("Count: \(books.count)")
+                List {
+                    ForEach(books) { book in
+                        
+                        NavigationLink(value: book) {
+                            HStack {
+                                EmojiRatingView(rating: book.rating)
+                                VStack(alignment: .leading) {
+                                    Text(book.title)
+                                        .font(.headline)
+                                    Text(book.author)
+                                        .foregroundStyle(.secondary)
+                                }
+                                
+                            }
+                        }
+
+                    }
+                }
+            }
                 .navigationTitle("Bookworm")
                 .sheet(isPresented: $isShowingAddBookView) {
                     AddBookView()
