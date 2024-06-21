@@ -10,7 +10,17 @@ import SwiftData
 
 struct ContentView: View {
     
-    @Query private var books: [Book]
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query(
+        sort: [
+            SortDescriptor(
+                \Book.rating,
+                 order: .reverse
+            ),
+            SortDescriptor(\Book.title)
+        ]
+    ) private var books: [Book]
     
     @State private var isShowingAddBookView = false
     
@@ -35,6 +45,8 @@ struct ContentView: View {
                         }
                         
                     }
+                    .onDelete(perform:delete)
+                    
                 }
             }
             .navigationTitle("Bookworm")
@@ -47,29 +59,24 @@ struct ContentView: View {
                         isShowingAddBookView.toggle()
                     }
                 }
+                ToolbarItem(placement: .automatic) {
+                    EditButton()
+                }
             }
             .navigationDestination(for: Book.self) { book in
                 DetailView(book: book)
             }
         }
     }
+    
+    func delete(for indexSet: IndexSet) {
+        for index in indexSet {
+            let book = books[index]
+            modelContext.delete(book)
+        }
+    }
 }
 
 #Preview {
-    do {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: Book.self, configurations: config)
-        let books: Query<Array<Book>.Element, [Book]> = [
-            
-        ]
-        defer {
-            @Environment(\.modelContext) var modelContext
-            modelContext.insert(Book(title: "Monster Hunter", author: "Johnny", genre: "Fantasy", review: "Very very nice!", rating: 5))
-        }
-        return ContentView(_books: books)
-            .modelContainer(container)
-    } catch {
-        
-        return ContentView()
-    }
+    ContentView()
 }
