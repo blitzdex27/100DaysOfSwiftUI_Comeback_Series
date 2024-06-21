@@ -22,15 +22,20 @@ struct RatingView: View {
     
     var body: some View {
         HStack {
-            ForEach(1..<maximumRating + 1, id: \.self) { rating in
+            if label.isEmpty == false {
+                Text(label)
+            }
+
+            ForEach(1..<maximumRating + 1, id: \.self) { number in
                 Button {
-                    self.rating = rating
+                    rating = number
                 } label: {
-                    image(for: rating)
-                        .foregroundStyle(rating > self.rating ? offColor : onColor)
+                    image(for: number)
+                        .foregroundStyle(number > rating ? offColor : onColor)
                 }
             }
         }
+        .buttonStyle(.plain)
     }
     
     private func image(for number: Int) -> Image {

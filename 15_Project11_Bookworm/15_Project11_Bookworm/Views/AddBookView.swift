@@ -13,7 +13,7 @@ struct AddBookView: View {
     
     @State private var title = ""
     @State private var author = ""
-    @State private var rating = 3
+    @State private var rating: Int = 3
     @State private var genre = "Fantasy"
     @State private var review = ""
     
@@ -35,7 +35,6 @@ struct AddBookView: View {
                 
                 Section("Write a review") {
                     TextEditor(text: $review)
-                    
                     RatingView(rating: $rating)
                 }
                 
