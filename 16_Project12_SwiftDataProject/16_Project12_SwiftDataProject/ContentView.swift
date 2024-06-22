@@ -82,8 +82,8 @@ struct ContentView: View {
 
         modelContext.insert(user1)
 
-        user1.jobs.append(job1)
-        user1.jobs.append(job2)
+        user1.jobs?.append(job1)
+        user1.jobs?.append(job2)
     }
 }
 
