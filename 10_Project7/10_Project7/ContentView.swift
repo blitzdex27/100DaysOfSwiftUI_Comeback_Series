@@ -6,37 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct ExpenseItem: Identifiable, Codable {
-    var id = UUID()
-    let name: String
-    let type: String
-    let amount: Double
-}
-
-@Observable
-class Expenses {
-    var items: [ExpenseItem] {
-        didSet {
-            if let encoded = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.set(encoded, forKey: "items")
-            }
-        }
-    }
-    init() {
-        if let savedItems =  UserDefaults.standard.data(forKey: "items"),
-           let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems)
-        {
-            items = decodedItems
-            return
-        }
-        items = []
-    }
-}
 
 struct ContentView: View {
 
-    @State var expenses = Expenses()
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query var expenses: [Expense]
     
     @State var currency = "USD"
     
@@ -72,14 +49,14 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddExpense, content: {
-                AddView(expense: expenses, currencyCode: currency)
+                AddView(currencyCode: currency)
             })
         }
         
     }
     
     var personalExpenses: some View {
-        ForEach(expenses.items) { item in
+        ForEach(expenses) { item in
             if item.type == "Personal"  {
                 HStack {
                     Text(item.name)
@@ -93,7 +70,7 @@ struct ContentView: View {
         .onDelete(perform: handleDelete(at:))
     }
     var businessExpenses: some View {
-        ForEach(expenses.items) { item in
+        ForEach(expenses) { item in
             if item.type == "Business"  {
                 HStack {
                     Text(item.name)
@@ -108,7 +85,12 @@ struct ContentView: View {
     
     
     func handleDelete(at indexSet: IndexSet) {
-        expenses.items.remove(atOffsets: indexSet)
+//        expenses.remove(atOffsets: indexSet)
+        for index in indexSet {
+            let expense = expenses[index]
+            modelContext.delete(expense)
+        }
+        
     }
 }
 

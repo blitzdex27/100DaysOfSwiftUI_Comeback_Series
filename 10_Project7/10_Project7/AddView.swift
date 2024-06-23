@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddView: View {
     @Environment(\.dismiss) var dismiss
-    
-    let expense: Expenses
+    @Environment(\.modelContext) private var modelContext
+//    let expense: Expenses
     let currencyCode: String
     
     @State var name: String = ""
@@ -33,8 +34,9 @@ struct AddView: View {
             .navigationTitle("Add new expense")
             .toolbar(content: {
                 Button("Save") {
-                    let item = ExpenseItem(name: name, type: type, amount: amount)
-                    expense.items.append(item)
+                    let item = Expense(name: name, type: type, amount: amount)
+//                    expense.items.append(item)
+                    modelContext.insert(item)
                     dismiss()
                 }
             })
@@ -43,5 +45,13 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expense: Expenses(), currencyCode: "USD")
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        var container = try ModelContainer(for: Expense.self, configurations: config)
+        return AddView(currencyCode: "USD")
+            .modelContainer(for: Expense.self)
+    } catch {
+        return Text("Failed")
+    }
+    
 }
