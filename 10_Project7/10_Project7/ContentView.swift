@@ -13,7 +13,17 @@ struct ContentView: View {
 
     @Environment(\.modelContext) private var modelContext
     
-    @Query var expenses: [Expense]
+    @Query(
+        filter: #Predicate<Expense> { expense in
+            expense.type == "Personal"
+        }
+    ) var personalExpenses: [Expense]
+    
+    @Query(
+        filter: #Predicate<Expense> { expense in
+            expense.type == "Business"
+        }
+    ) var businessExpenses: [Expense]
     
     @State var currency = "USD"
     
@@ -36,10 +46,16 @@ struct ContentView: View {
                     
                 }
                 Section("Personal") {
-                    personalExpenses
+                    ForEach(personalExpenses) {
+                        ExpenseView(expense: $0, currencyCode: currency)
+                    }
+                    .onDelete(perform: handlePersonalExpenseDelete(at:))
                 }
                 Section("Business") {
-                    businessExpenses
+                    ForEach(businessExpenses) {
+                        ExpenseView(expense: $0, currencyCode: currency)
+                    }
+                    .onDelete(perform: handleBusinessExpenseDelete(at:))
                 }
             }
             .navigationTitle("Expense tracker")
@@ -55,42 +71,17 @@ struct ContentView: View {
         
     }
     
-    var personalExpenses: some View {
-        ForEach(expenses) { item in
-            if item.type == "Personal"  {
-                HStack {
-                    Text(item.name)
-                    Spacer()
-                    Text(item.amount, format:.currency(code: currency))
-                        .applyAmountStyle(for: item.amount)
-                }
-            }
-            
-        }
-        .onDelete(perform: handleDelete(at:))
-    }
-    var businessExpenses: some View {
-        ForEach(expenses) { item in
-            if item.type == "Business"  {
-                HStack {
-                    Text(item.name)
-                    Spacer()
-                    Text(item.amount, format:.currency(code: currency))
-                        .applyAmountStyle(for: item.amount)
-                }
-            }
-        }
-        .onDelete(perform: handleDelete(at:))
-    }
-    
-    
-    func handleDelete(at indexSet: IndexSet) {
-//        expenses.remove(atOffsets: indexSet)
+    func handlePersonalExpenseDelete(at indexSet: IndexSet) {
         for index in indexSet {
-            let expense = expenses[index]
+            let expense = personalExpenses[index]
             modelContext.delete(expense)
         }
-        
+    }
+    func handleBusinessExpenseDelete(at indexSet: IndexSet) {
+        for index in indexSet {
+            let expense = businessExpenses[index]
+            modelContext.delete(expense)
+        }
     }
 }
 
