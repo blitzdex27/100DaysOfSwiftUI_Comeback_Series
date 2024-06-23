@@ -10,9 +10,13 @@ import SwiftData
 
 @main
 struct _0_Project7App: App {
+    
+    @State private var appModel = AppModel.makeDummy()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.appModel, appModel)
         }
         .modelContainer(for: Expense.self)
     }

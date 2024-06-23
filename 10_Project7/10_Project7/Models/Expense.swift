@@ -13,6 +13,8 @@ class Expense {
     let name: String
     let type: String
     let amount: Double
+    let dateCreated: Date = Date.now
+    
     
     init(name: String, type: String, amount: Double) {
         self.name = name

@@ -29,7 +29,7 @@ struct ExpenseView: View {
         let container = try ModelContainer(for: Expense.self, configurations: config)
         let expense = Expense(name: "Grocery", type: "Cash", amount: 100)
         return ExpenseView(expense: expense, currencyCode: "PHP")
-            .modelContainer(for: Expense.self)
+            .modelContainer(container)
     } catch {
         return Text("Failed to load")
     }

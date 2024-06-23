@@ -9,16 +9,16 @@ import SwiftUI
 import SwiftData
 
 struct AddView: View {
-    @Environment(\.dismiss) var dismiss
-    @Environment(\.modelContext) private var modelContext
-//    let expense: Expenses
+    
     let currencyCode: String
     
-    @State var name: String = ""
-    @State var type: String = "Personal"
-    @State var amount: Double = 0.0
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) private var modelContext
+    @State private var name: String = ""
+    @State private var type: String = "Personal"
+    @State private var amount: Double = 0.0
     
-    let typeOptions = ["Personal", "Business"]
+    let typeOptions: [String]// = ["Personal", "Business"]
     
     var body: some View {
         NavigationStack {
@@ -35,7 +35,6 @@ struct AddView: View {
             .toolbar(content: {
                 Button("Save") {
                     let item = Expense(name: name, type: type, amount: amount)
-//                    expense.items.append(item)
                     modelContext.insert(item)
                     dismiss()
                 }
@@ -47,9 +46,10 @@ struct AddView: View {
 #Preview {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        var container = try ModelContainer(for: Expense.self, configurations: config)
-        return AddView(currencyCode: "USD")
-            .modelContainer(for: Expense.self)
+        let container = try ModelContainer(for: Expense.self, configurations: config)
+        let appModel = AppModel.makeDummy()
+        return AddView(currencyCode: "USD", typeOptions: appModel.expenseTypes)
+            .modelContainer(container)
     } catch {
         return Text("Failed")
     }
