@@ -23,16 +23,67 @@ struct User : Codable, Identifiable {
 	let email : String?
 	let address : String?
 	let about : String?
-	let registered : String?
+	let registered : Date?
 	let tags : [String]?
 	let friends : [Friends]?
-
     
+    var unWrapped: UnWrapped {
+        UnWrapped(user: self)
+    }
 }
 
 extension User {
-    var unWrappedName: String {
+    struct UnWrapped {
+        let id : String
+        let isActive : Bool
+        let name : String
+        let age : Int?
+        let company : String
+        let email : String
+        let address : String
+        let about : String
+        let registered : Date?
+        let tags : [String]
+        let friends : [Friends]?
         
+        var ageStr: String {
+            if let age = age {
+                String(age)
+            } else {
+                "-"
+            }
+        }
+        
+        var registeredDateStr: String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-y"
+            
+            if let date = registered {
+                return dateFormatter.string(from: date)
+            } else {
+                return "-"
+            }
+        }
+        
+        init(user: User) {
+            self.id = user.id ?? "-"
+            self.isActive = user.isActive ?? false
+            self.name = user.name ?? "-"
+            self.age = user.age
+            self.company = user.company ?? "-"
+            self.email = user.email ?? "-"
+            self.address = user.address ?? "-"
+            self.about = user.about ?? "-"
+            self.registered = user.registered
+            self.tags = user.tags ?? []
+            self.friends = user.friends ?? []
+        }
+    }
+}
+
+extension String? {
+    var unWrapped: String {
+        self ?? "-"
     }
 }
 

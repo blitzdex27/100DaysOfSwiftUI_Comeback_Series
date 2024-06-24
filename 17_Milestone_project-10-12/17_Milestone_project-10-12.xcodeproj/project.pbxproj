@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3464B86D2C29880B00D1BB86 /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3464B86C2C29880B00D1BB86 /* DetailItemView.swift */; };
 		346886EC2C293BF600987708 /* _7_Milestone_project_10_12App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346886EB2C293BF600987708 /* _7_Milestone_project_10_12App.swift */; };
 		346886EE2C293BF600987708 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346886ED2C293BF600987708 /* ContentView.swift */; };
 		346886F02C293BF700987708 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 346886EF2C293BF700987708 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3464B86C2C29880B00D1BB86 /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		346886E82C293BF600987708 /* 17_Milestone_project-10-12.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "17_Milestone_project-10-12.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		346886EB2C293BF600987708 /* _7_Milestone_project_10_12App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _7_Milestone_project_10_12App.swift; sourceTree = "<group>"; };
 		346886ED2C293BF600987708 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				346886EB2C293BF600987708 /* _7_Milestone_project_10_12App.swift */,
 				346886ED2C293BF600987708 /* ContentView.swift */,
 				346887682C297A5800987708 /* UserDetailView.swift */,
+				3464B86C2C29880B00D1BB86 /* DetailItemView.swift */,
 				346887062C293D3D00987708 /* Models */,
 				346886FB2C293C4500987708 /* Services */,
 				346886EF2C293BF700987708 /* Assets.xcassets */,
@@ -172,6 +175,7 @@
 				346886FA2C293C1500987708 /* Documentation.docc in Sources */,
 				346887012C293CA100987708 /* APIService.swift in Sources */,
 				346887042C293D3A00987708 /* Friends.swift in Sources */,
+				3464B86D2C29880B00D1BB86 /* DetailItemView.swift in Sources */,
 				346887692C297A5800987708 /* UserDetailView.swift in Sources */,
 				346886EC2C293BF600987708 /* _7_Milestone_project_10_12App.swift in Sources */,
 				346887052C293D3A00987708 /* User.swift in Sources */,

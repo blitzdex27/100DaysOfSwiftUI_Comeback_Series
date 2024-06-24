@@ -16,24 +16,25 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             
-           
-                List(users) { user in
+            
+            List(users) { user in
+                
+                NavigationLink(value: user) {
                     HStack {
-                        NavigationLink(value: user) {
-                            Text(user.name ?? "Anonymous")
-                            Spacer()
-                            Text(user.isActive == true ? "Active" : "Inactive")
-                                .foregroundStyle(user.isActive == true ? Color.green : Color.gray)
-                        }
+                        Text(user.name ?? "Anonymous")
+                        Spacer()
+                        Text(user.isActive == true ? "Active" : "Inactive")
+                            .foregroundStyle(user.isActive == true ? Color.green : Color.gray)
                     }
                 }
-                .onAppear(perform: getUsersIfNeeded)
-                .navigationTitle("Users")
-                .scrollContentBackground(.hidden)
-                .background(.orange)
-                .navigationDestination(for: User.self) { user in
-                    <#code#>
-                }
+            }
+            .onAppear(perform: getUsersIfNeeded)
+            .navigationTitle("Users")
+            .scrollContentBackground(.hidden)
+            .background(.orange)
+            .navigationDestination(for: User.self) { user in
+                UserDetailView(user: user)
+            }
         }
     }
     
