@@ -61,11 +61,7 @@ struct UserDetailView: View {
                     Text(user.unWrapped.address)
                 }
                 
-                HStack {
-                    Text("About:")
-                    Spacer()
-                    Text(user.unWrapped.about)
-                }
+ 
                 
                 
                 HStack {
@@ -74,21 +70,50 @@ struct UserDetailView: View {
                     Text(user.unWrapped.registeredDateStr)
                 }
                 
-                HStack {
-                    Text("Tags:")
-                    Spacer()
-                    ScrollView {
-                        HStack{
-                            ForEach(user.unWrapped.tags, id: \.self) { tag in
-                                Text(tag)
-                                    .fixedSize()
-                            }
+
+                
+             
+            }
+            Section("Tags") {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(user.unWrapped.tags, id: \.self) { tag in
+                            Text(tag)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(.gray)
+                                .clipShape(.capsule)
+                                .foregroundStyle(.white)
                         }
-                            
                     }
-                    .frame(width: 100)
-                    
                 }
+                .scrollIndicators(.hidden)
+            }
+            Section("About") {
+                Text(user.unWrapped.about)
+            }
+            Section("Friends") {
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible(minimum: .zero, maximum: .infinity)),
+                        GridItem(.flexible(minimum: .zero, maximum: .infinity)), 
+                        GridItem(.flexible(minimum: .zero, maximum: .infinity)),
+                    ]
+                ) {
+                    ForEach(user.unWrapped.friends) { friend in
+                        Text(friend.name ?? "-")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(.gray)
+                            .clipShape(.capsule)
+                            .foregroundStyle(.white)
+                            .padding(5)
+                            .background(.green)
+                            .clipShape(.capsule)
+                    }
+                }
+                
+                
             }
             
         }

@@ -12,7 +12,7 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct Friends : Codable {
+struct Friends : Codable, Identifiable {
 	let id : String?
 	let name : String?
 

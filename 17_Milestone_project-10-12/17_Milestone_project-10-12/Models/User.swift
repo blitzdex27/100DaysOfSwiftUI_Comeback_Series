@@ -44,7 +44,7 @@ extension User {
         let about : String
         let registered : Date?
         let tags : [String]
-        let friends : [Friends]?
+        let friends : [Friends]
         
         var ageStr: String {
             if let age = age {
@@ -56,7 +56,7 @@ extension User {
         
         var registeredDateStr: String {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM-dd-y"
+            dateFormatter.dateFormat = "y-MM-dd"
             
             if let date = registered {
                 return dateFormatter.string(from: date)
