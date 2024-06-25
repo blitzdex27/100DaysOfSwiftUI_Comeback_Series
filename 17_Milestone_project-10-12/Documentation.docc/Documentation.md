@@ -20,3 +20,7 @@ You might notice that the date each user registered has a very specific format: 
 While you’re building this, I want you to keep one thing in mind: this kind of app is the bread and butter of iOS app development – if you can nail this with confidence, you’re well on your way to a full-time job as an app developer.
 
 Tip: As always, the best way to solve this challenge is to keep it simple – write as little code as you can to solve the challenge, and for you to feel comfortable that it works well.
+
+
+
+
