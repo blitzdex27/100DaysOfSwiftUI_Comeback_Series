@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
-    
-    @State private var users: [User] = []
+    @Environment(\.modelContext) private var modelContext
+    @Query private var users: [User]
     
     
     
@@ -30,8 +31,6 @@ struct ContentView: View {
             }
             .onAppear(perform: getUsersIfNeeded)
             .navigationTitle("Users")
-            .scrollContentBackground(.hidden)
-            .background(.orange)
             .navigationDestination(for: User.self) { user in
                 UserDetailView(user: user)
             }
@@ -41,11 +40,30 @@ struct ContentView: View {
     private func getUsersIfNeeded() {
         if users.isEmpty {
             Task {
-                users = await APIService.getUsers()
+                
+                print(modelContext.autosaveEnabled)
+                do {
+                    
+                    let users = await APIService.getUsers()
+                    
+                    try modelContext.transaction {
+                        for user in users {
+                            modelContext.insert(user)
+                        }
+                    }
+    
+                    print("users added")
+                } catch {
+                    print("Unable to fetch users")
+                }
+                
             }
         }
     }
+    
+    
 }
+
 
 #Preview {
     ContentView()

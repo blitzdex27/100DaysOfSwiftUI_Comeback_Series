@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
-
+import SwiftData
 @main
 struct _7_Milestone_project_10_12App: App {
+
+//    private let container: ModelContainer = {
+//        let config = ModelConfiguration(isStoredInMemoryOnly: false)
+//        let container = try! ModelContainer(for: User.self, configurations: config)
+//        return container
+//    }()
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: User.self, isAutosaveEnabled: false)
     }
 }

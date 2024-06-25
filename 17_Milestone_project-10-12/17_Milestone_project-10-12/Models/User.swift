@@ -12,9 +12,10 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
+import SwiftData
 
-
-class User : Codable, Identifiable {
+@Model
+class User : Codable {
 	let id : String?
 	let isActive : Bool?
 	let name : String?
@@ -25,10 +26,68 @@ class User : Codable, Identifiable {
 	let about : String?
 	let registered : Date?
 	let tags : [String]?
-	let friends : [Friends]?
+	var friends : [Friends]?
     
     var unWrapped: UnWrapped {
         UnWrapped(user: self)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case isActive = "isActive"
+        case name = "name"
+        case age = "age"
+        case company = "company"
+        case email = "email"
+        case address = "address"
+        case about = "about"
+        case registered = "registered"
+        case tags = "tags"
+        case friends = "friends"
+    }
+    init(id: String?, isActive: Bool?, name: String?, age: Int?, company: String?, email: String?, address: String?, about: String?, registered: Date?, tags: [String]?, friends: [Friends]?) {
+        self.id = id
+        self.isActive = isActive
+        self.name = name
+        self.age = age
+        self.company = company
+        self.email = email
+        self.address = address
+        self.about = about
+        self.registered = registered
+        self.tags = tags
+        self.friends = friends
+    }
+    
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(String.self, forKey: .id)
+        isActive = try container.decodeIfPresent(Bool.self, forKey: .isActive)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        age = try container.decodeIfPresent(Int.self, forKey: .age)
+        company = try container.decodeIfPresent(String.self, forKey: .company)
+        email = try container.decodeIfPresent(String.self, forKey: .email)
+        address = try container.decodeIfPresent(String.self, forKey: .address)
+        about = try container.decodeIfPresent(String.self, forKey: .about)
+        registered = try container.decodeIfPresent(Date.self, forKey: .registered)
+        tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        friends = try container.decodeIfPresent([Friends].self, forKey: .friends)
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(isActive, forKey: .isActive)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(age, forKey: .age)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(address, forKey: .address)
+        try container.encodeIfPresent(about, forKey: .about)
+        try container.encodeIfPresent(registered, forKey: .registered)
+        try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(friends, forKey: .friends)
     }
 }
 

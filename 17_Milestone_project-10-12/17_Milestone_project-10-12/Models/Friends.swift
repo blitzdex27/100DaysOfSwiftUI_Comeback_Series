@@ -12,9 +12,31 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct Friends : Codable, Identifiable {
+import SwiftData
+
+@Model
+class Friends : Codable, Identifiable {
 	let id : String?
 	let name : String?
 
+    enum CodingKeys: CodingKey {
+        case id
+        case name
+    }
+    
+    init(id: String?, name: String?) {
+        self.id = id
+        self.name = name
+    }
+    required init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(String.self, forKey: .id)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+    }
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(name, forKey: .name)
+    }
     
 }
