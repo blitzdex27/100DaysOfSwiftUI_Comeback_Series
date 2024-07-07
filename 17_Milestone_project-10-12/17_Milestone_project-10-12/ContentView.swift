@@ -10,9 +10,8 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    
     @Query private var users: [User]
-    
-    
     
     var body: some View {
         NavigationStack {

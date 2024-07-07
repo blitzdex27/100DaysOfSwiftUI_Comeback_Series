@@ -146,14 +146,14 @@ extension String? {
     }
 }
 
-extension User: Hashable {
-    static func == (lhs: User, rhs: User) -> Bool {
-        lhs.id == lhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    
-}
+//extension User: Hashable {
+//    static func == (lhs: User, rhs: User) -> Bool {
+//        lhs.id == lhs.id
+//    }
+//    
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id)
+//    }
+//    
+//    
+//}
