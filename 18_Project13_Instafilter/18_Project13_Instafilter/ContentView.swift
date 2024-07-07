@@ -22,10 +22,7 @@ struct ContentView: View {
     @State private var inputImage: CIImage?
     @State private var showingChangeFilter = false
     
-    
-    @State private var filterIntensity = 0.5
-    @State private var filterRadius = 100.0
-    @State private var filterScale = 5.0
+    @State private var filterInputDict = [String: Any]()
     
     private var filterInputKeys: [String] {
         selectedFilter.inputKeys.filter({ $0 != kCIInputImageKey })
@@ -51,21 +48,25 @@ struct ContentView: View {
                 Button("Change filter") {
                     showingChangeFilter.toggle()
                 }
+                .padding()
                 .disabled(processedImage == nil)
                 
-                if filterInputKeys.contains(kCIInputIntensityKey) {
-                    FilterSlider(selection: $filterIntensity, name: "Intensity", onChange: applyProcessing)
-                        .disabled(processedImage == nil)
+                VStack {
+                    if let name = selectedFilter.attributes[kCIAttributeFilterDisplayName] as? String {
+                        Text(name)
+                            .font(.headline)
+                    }
+                    
+                        
+                    ForEach(filterInputKeys, id: \.self) { inputKey in
+                        FilterSlider(filter: selectedFilter, name: inputKey, filterInputKey: inputKey) { value, valueVector, key, isVector in
+                            filterInputDict[key] = !isVector ? value : valueVector
+                            applyProcessing()
+                        }
+                        Divider()
+                    }
                 }
-                
-                if filterInputKeys.contains(kCIInputRadiusKey) {
-                    FilterSlider(selection: $filterRadius, name: "Radius", onChange: applyProcessing, limits: 0...200)
-                        .disabled(processedImage == nil)
-                }
-                if filterInputKeys.contains(kCIInputScaleKey) {
-                    FilterSlider(selection: $filterScale, name: "Scale", onChange: applyProcessing, limits: 0...10)
-                        .disabled(processedImage == nil)
-                }
+                .disabled(processedImage == nil)
 
                 
                 if let processedImage {
@@ -87,11 +88,13 @@ struct ContentView: View {
         Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
         Button("Vignette") { setFilter(CIFilter.vignette()) }
         Button("Kaleidoscope") { setFilter(CIFilter.kaleidoscope()) }
+        Button("Thermal") { setFilter(CIFilter.thermal()) }
+        Button("Sharpen Luminance") { setFilter(CIFilter.sharpenLuminance()) }
         Button("Cancel", role: .cancel) { }
     }
     
     @MainActor private func setFilter(_ filter: CIFilter) {
-        
+        filterInputDict.removeAll()
         selectedFilter = filter
         applyProcessing()
         
@@ -103,18 +106,11 @@ struct ContentView: View {
     
     private func loadImage() {
         Task {
-            guard let pickedPhoto else {
+            guard let pickedPhoto,
+                let imageData = try? await pickedPhoto.loadTransferable(type: Data.self),
+                let ciImage = CIImage(data: imageData) else {
                 return
             }
-            
-            guard let imageData = try? await pickedPhoto.loadTransferable(type: Data.self) else {
-                return
-            }
-            
-            guard let ciImage = CIImage(data: imageData) else {
-                return
-            }
-            
             inputImage = ciImage
             
             applyProcessing()
@@ -124,20 +120,16 @@ struct ContentView: View {
     private func applyProcessing() {
         selectedFilter.setValue(inputImage, forKey: kCIInputImageKey)
         
-        if filterInputKeys.contains(kCIInputIntensityKey) {
-            selectedFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey)
+        for (key, value) in filterInputDict {
+            if let value = value as? CGPoint {
+                selectedFilter.setValue(CIVector(cgPoint: value), forKey: key)
+            } else {
+                selectedFilter.setValue(value, forKey: key)
+            }
+            
         }
-        if filterInputKeys.contains(kCIInputRadiusKey) {
-            selectedFilter.setValue(Float(filterRadius), forKey: kCIInputRadiusKey)
-        }
-        if filterInputKeys.contains(kCIInputScaleKey) {
-            selectedFilter.setValue(filterScale, forKey: kCIInputScaleKey)
-        }
-        guard let outputImage = selectedFilter.outputImage else {
-            return
-        }
-        
-        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+        guard let outputImage = selectedFilter.outputImage,
+            let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
             return
         }
         
