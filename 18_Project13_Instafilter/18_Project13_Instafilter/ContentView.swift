@@ -18,11 +18,14 @@ struct ContentView: View {
     @State private var processedImage: Image?
     @State private var pickedPhoto: PhotosPickerItem?
     @State private var selectedFilter: CIFilter = CIFilter.sepiaTone()
-    @State private var filterIntensity = 0.5
-//    @State private var filterValues = [String: Double]()
     
     @State private var inputImage: CIImage?
     @State private var showingChangeFilter = false
+    
+    
+    @State private var filterIntensity = 0.5
+    @State private var filterRadius = 100.0
+    @State private var filterScale = 5.0
     
     private var filterInputKeys: [String] {
         selectedFilter.inputKeys.filter({ $0 != kCIInputImageKey })
@@ -48,11 +51,22 @@ struct ContentView: View {
                 Button("Change filter") {
                     showingChangeFilter.toggle()
                 }
-                HStack {
-                    Text("Intensity")
-                    Slider(value: $filterIntensity)
-                        .onChange(of: filterIntensity, applyProcessing)
+                .disabled(processedImage == nil)
+                
+                if filterInputKeys.contains(kCIInputIntensityKey) {
+                    FilterSlider(selection: $filterIntensity, name: "Intensity", onChange: applyProcessing)
+                        .disabled(processedImage == nil)
                 }
+                
+                if filterInputKeys.contains(kCIInputRadiusKey) {
+                    FilterSlider(selection: $filterRadius, name: "Radius", onChange: applyProcessing, limits: 0...200)
+                        .disabled(processedImage == nil)
+                }
+                if filterInputKeys.contains(kCIInputScaleKey) {
+                    FilterSlider(selection: $filterScale, name: "Scale", onChange: applyProcessing, limits: 0...10)
+                        .disabled(processedImage == nil)
+                }
+
                 
                 if let processedImage {
                     ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
@@ -110,13 +124,13 @@ struct ContentView: View {
         selectedFilter.setValue(inputImage, forKey: kCIInputImageKey)
         
         if filterInputKeys.contains(kCIInputIntensityKey) {
-            selectedFilter.setValue(Float(filterIntensity), forKey: kCIInputIntensityKey)
+            selectedFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey)
         }
         if filterInputKeys.contains(kCIInputRadiusKey) {
-            selectedFilter.setValue(Float(filterIntensity * 200), forKey: kCIInputRadiusKey)
+            selectedFilter.setValue(Float(filterRadius), forKey: kCIInputRadiusKey)
         }
         if filterInputKeys.contains(kCIInputScaleKey) {
-            selectedFilter.setValue(filterIntensity * 10, forKey: kCIInputScaleKey)
+            selectedFilter.setValue(filterScale, forKey: kCIInputScaleKey)
         }
         guard let outputImage = selectedFilter.outputImage else {
             return
