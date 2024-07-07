@@ -86,6 +86,7 @@ struct ContentView: View {
         Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
         Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
         Button("Vignette") { setFilter(CIFilter.vignette()) }
+        Button("Kaleidoscope") { setFilter(CIFilter.kaleidoscope()) }
         Button("Cancel", role: .cancel) { }
     }
     
