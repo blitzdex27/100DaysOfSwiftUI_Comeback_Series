@@ -1,13 +1,6 @@
-//
-//  ContentView.swift
-//  19_Project14_Maps
-//
-//  Created by Dexter  on 7/19/24.
-//
+#  <#Title#>
 
-import SwiftUI
-import MapKit
-
+```
 struct Location: Identifiable, Equatable {
     var id: UUID
     var name: String
@@ -26,8 +19,6 @@ struct Location: Identifiable, Equatable {
 }
 
 struct ContentView: View {
-    @State private var viewModel = ViewModel()
-    
     let startPosition = MapCameraPosition.region(
         MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 56, longitude: -3),
@@ -37,15 +28,18 @@ struct ContentView: View {
             )
         )
     )
-
+    
+    @State var locations = [Location]()
     
     @State var addMarker = false
+
+    @State var selectedLocation: Location?
     
     var body: some View {
         NavigationStack {
             MapReader { proxy in
                 Map(initialPosition: startPosition) {
-                    ForEach(viewModel.locations) { location in
+                    ForEach(locations) { location in
                         Annotation(location.name, coordinate: location.coordinate) {
                             Image(systemName: "start.circle")
                                 .resizable()
@@ -54,7 +48,7 @@ struct ContentView: View {
                                 .background(.white)
                                 .clipShape(.circle)
                                 .onLongPressGesture {
-                                    viewModel.selectedLocation = location
+                                    selectedLocation = location
                                 }
                         }
               
@@ -67,8 +61,9 @@ struct ContentView: View {
                         return
                     }
                     if let coordinate = proxy.convert(position, from: .local) {
-                        let tappedLocation = viewModel.addLocation(at: coordinate)
-                        viewModel.selectedLocation = tappedLocation
+                        let location = Location(id: UUID(), name: "New location", description: "desc", latitude: coordinate.latitude, longitude: coordinate.longitude)
+                        locations.append(location)
+                        selectedLocation = location
                     }
                 }
                 
@@ -82,15 +77,68 @@ struct ContentView: View {
                     }
                 }
             })
-            .sheet(item: $viewModel.selectedLocation) { location in
+            .sheet(item: $selectedLocation) { location in
                 EditLocation(location: location) { newLocation in
-                    viewModel.update(location: location)
+                    if let index = locations.firstIndex(where: { $0.id == location.id }) {
+                        locations[index] = newLocation
+                    }
                 }
             }
         }
     }
 }
+```
+
+```
+import SwiftUI
+
+struct EditLocation: View {
+    @Environment(\.dismiss) private var dismiss
+    var location: Location
+    let onSave: (Location) -> Void
+    
+    @State private var name: String
+    @State private var description: String
+    
+    init(location: Location, onSave: @escaping (Location) -> Void) {
+        self.location = location
+        self.name = location.name
+        self.description = location.description
+        self.onSave = onSave
+    }
+    
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Name") {
+                    TextField("Name", text: $name)
+                }
+                Section("Description") {
+                    TextField("Description", text: $description)
+                }
+            }
+            .navigationTitle("Edit location")
+            .toolbar(content: {
+                Button("Save") {
+                    var newLocation = location
+                    newLocation.id = UUID()
+                    newLocation.name = name
+                    newLocation.description = description
+ 
+                    onSave(newLocation)
+                    dismiss()
+                }
+            })
+        }
+    }
+}
 
 #Preview {
-    ContentView()
+    NavigationStack {
+        EditLocation(location: .example) { _ in
+            
+        }
+    }
 }
+
+```
