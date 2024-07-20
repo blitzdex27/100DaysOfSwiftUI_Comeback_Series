@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct Location: Identifiable, Equatable {
+struct Location: Identifiable, Equatable, Codable {
     var id: UUID
     var name: String
     var description: String
@@ -30,7 +30,7 @@ struct ContentView: View {
     
     let startPosition = MapCameraPosition.region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 56, longitude: -3),
+            center: CLLocationCoordinate2D(latitude: 14.115286, longitude: 120.962112),
             span: MKCoordinateSpan(
                 latitudeDelta: 10,
                 longitudeDelta: 10
@@ -42,6 +42,18 @@ struct ContentView: View {
     @State var addMarker = false
     
     var body: some View {
+        if viewModel.isUnlocked {
+            content
+        } else {
+            Button("Unlock Places", action: viewModel.authenticate)
+                .padding()
+                .background(.blue)
+                .foregroundStyle(.white)
+                .clipShape(.capsule)
+        }
+    }
+    
+    var content: some View {
         NavigationStack {
             MapReader { proxy in
                 Map(initialPosition: startPosition) {
@@ -61,7 +73,7 @@ struct ContentView: View {
                             
                     }
            
-                }
+                }.mapStyle(<#T##value: MapStyle##MapStyle#>)
                 .onTapGesture { position in
                     guard addMarker else {
                         return
@@ -83,9 +95,7 @@ struct ContentView: View {
                 }
             })
             .sheet(item: $viewModel.selectedLocation) { location in
-                EditLocation(location: location) { newLocation in
-                    viewModel.update(location: location)
-                }
+                EditLocation(location: location, onSave: viewModel.update, onDelete: viewModel.delete)
             }
         }
     }

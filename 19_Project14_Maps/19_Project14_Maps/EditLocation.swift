@@ -16,6 +16,7 @@ struct EditLocation: View {
     @Environment(\.dismiss) private var dismiss
     var location: Location
     let onSave: (Location) -> Void
+    let onDelete: (Location) -> Void
     
     @State private var name: String
     @State private var description: String
@@ -23,11 +24,12 @@ struct EditLocation: View {
     @State private var loadingState = LoadingState.loading
     @State private var pages = [Page]()
     
-    init(location: Location, onSave: @escaping (Location) -> Void) {
+    init(location: Location, onSave: @escaping (Location) -> Void, onDelete: @escaping (Location) -> Void) {
         self.location = location
         self.name = location.name
         self.description = location.description
         self.onSave = onSave
+        self.onDelete = onDelete
     }
     
     var body: some View {
@@ -58,14 +60,22 @@ struct EditLocation: View {
             }
             .navigationTitle("Edit location")
             .toolbar(content: {
-                Button("Save") {
-                    var newLocation = location
-                    newLocation.id = UUID()
-                    newLocation.name = name
-                    newLocation.description = description
- 
-                    onSave(newLocation)
-                    dismiss()
+                ToolbarItem {
+                    Button("Save") {
+                        var newLocation = location
+                        newLocation.id = UUID()
+                        newLocation.name = name
+                        newLocation.description = description
+     
+                        onSave(newLocation)
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .destructiveAction) {
+                    Button("Delete", systemImage: "trash") {
+                        onDelete(location)
+                        dismiss()
+                    }
                 }
             })
             .onAppear(perform: {
@@ -116,6 +126,8 @@ struct EditLocation: View {
 #Preview {
     NavigationStack {
         EditLocation(location: .example) { _ in
+            
+        } onDelete: { _ in
             
         }
     }
