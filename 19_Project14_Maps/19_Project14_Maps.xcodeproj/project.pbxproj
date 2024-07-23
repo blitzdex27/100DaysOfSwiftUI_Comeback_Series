@@ -51,6 +51,7 @@
 		345947822C4FAC6F00668FCB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				346770232C4A16AE00454AE4 /* Result.swift */,
 				345947832C4FAC8300668FCB /* Location.swift */,
 				345947852C4FAE2D00668FCB /* PickerItemMapStyle.swift */,
 			);
@@ -83,7 +84,6 @@
 				346770152C49E94900454AE4 /* Assets.xcassets */,
 				346770212C49FF2500454AE4 /* EditLocation.swift */,
 				345947872C4FB48800668FCB /* EditLocation+ViewModel.swift */,
-				346770232C4A16AE00454AE4 /* Result.swift */,
 				346770252C4A1B4A00454AE4 /* WikiService.swift */,
 				3467701F2C49F70500454AE4 /* Documentation.docc */,
 				346770172C49E94900454AE4 /* Preview Content */,
