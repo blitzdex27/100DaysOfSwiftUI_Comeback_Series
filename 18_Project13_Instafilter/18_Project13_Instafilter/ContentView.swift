@@ -73,6 +73,7 @@ struct ContentView: View {
                     ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
                 }
             }
+            .navigationTitle("Instafilter")
         }
         .padding()
         .onChange(of: pickedPhoto, loadImage)

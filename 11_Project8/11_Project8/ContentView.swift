@@ -10,12 +10,16 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var astronauts = Bundle.main.decode("astranauts.json")
+    var astronauts = Bundle.main.decode("astronauts.json")
+    
+    var astronautArray: [Astronaut] {
+        astronauts.values.map { $0.self }
+    }
     var body: some View {
         ScrollView(.vertical) {
             LazyVStack(spacing: 10) {
-                ForEach(astronauts.values, id:\.self) {
-                    Text($0.name)
+                ForEach(astronautArray, id:\.self) { astronaut in
+                    Text(astronaut.name)
                     
                 }
             }

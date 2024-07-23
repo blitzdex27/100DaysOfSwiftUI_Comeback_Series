@@ -8,23 +8,6 @@
 import SwiftUI
 import MapKit
 
-struct Location: Identifiable, Equatable, Codable {
-    var id: UUID
-    var name: String
-    var description: String
-    var latitude: Double
-    var longitude: Double
-    
-    var coordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    }
-    
-    static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
-    static let example = Location(id: UUID(), name: "US", description: "United States", latitude: 56, longitude: 3)
-}
-
 struct ContentView: View {
     @State private var viewModel = ViewModel()
     
@@ -55,6 +38,7 @@ struct ContentView: View {
     
     var content: some View {
         NavigationStack {
+
             MapReader { proxy in
                 Map(initialPosition: startPosition) {
                     ForEach(viewModel.locations) { location in
@@ -73,7 +57,7 @@ struct ContentView: View {
                             
                     }
            
-                }.mapStyle(<#T##value: MapStyle##MapStyle#>)
+                }.mapStyle(viewModel.mapStyle.mapStyle)
                 .onTapGesture { position in
                     guard addMarker else {
                         return
@@ -93,9 +77,23 @@ struct ContentView: View {
                         addMarker.toggle()
                     }
                 }
+                ToolbarItem {
+                    Picker("Map Style", selection: $viewModel.mapStyle) {
+                        ForEach(viewModel.mapStyles, id: \.self) { mapStyle in
+                            Text(mapStyle.name)
+                                
+                        }
+                    }
+                }
+
             })
             .sheet(item: $viewModel.selectedLocation) { location in
                 EditLocation(location: location, onSave: viewModel.update, onDelete: viewModel.delete)
+            }
+            .alert("Authentication Error", isPresented: $viewModel.showingAuthErrorAlert) {
+                Button("Ok") { }
+            } message: {
+                Text(viewModel.authError ?? "Unknown error")
             }
         }
     }

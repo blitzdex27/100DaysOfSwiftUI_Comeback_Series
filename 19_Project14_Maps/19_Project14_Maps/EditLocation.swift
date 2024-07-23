@@ -8,26 +8,15 @@
 import SwiftUI
 
 struct EditLocation: View {
-    enum LoadingState {
-        case loading, loaded, failed
-    }
-    
     
     @Environment(\.dismiss) private var dismiss
-    var location: Location
     let onSave: (Location) -> Void
     let onDelete: (Location) -> Void
     
-    @State private var name: String
-    @State private var description: String
-    
-    @State private var loadingState = LoadingState.loading
-    @State private var pages = [Page]()
+    @State private var viewModel: ViewModel
     
     init(location: Location, onSave: @escaping (Location) -> Void, onDelete: @escaping (Location) -> Void) {
-        self.location = location
-        self.name = location.name
-        self.description = location.description
+        self._viewModel = State(wrappedValue: ViewModel(location: location))
         self.onSave = onSave
         self.onDelete = onDelete
     }
@@ -36,15 +25,15 @@ struct EditLocation: View {
         NavigationStack {
             Form {
                 Section("Name") {
-                    TextField("Name", text: $name)
+                    TextField("Name", text: $viewModel.name)
                 }
                 Section("Description") {
-                    TextField("Description", text: $description)
+                    TextField("Description", text: $viewModel.description)
                 }
                 Section("Nearby...") {
-                    switch loadingState {
+                    switch viewModel.loadingState {
                     case .loaded:
-                        ForEach(pages, id: \.pageid) { page in
+                        ForEach(viewModel.pages, id: \.pageid) { page in
                             Text(page.title)
                                 .font(.headline)
                             + Text(": ") +
@@ -62,18 +51,14 @@ struct EditLocation: View {
             .toolbar(content: {
                 ToolbarItem {
                     Button("Save") {
-                        var newLocation = location
-                        newLocation.id = UUID()
-                        newLocation.name = name
-                        newLocation.description = description
-     
-                        onSave(newLocation)
+                       
+                        onSave(viewModel.makeUpdatedLocationDetails())
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .destructiveAction) {
                     Button("Delete", systemImage: "trash") {
-                        onDelete(location)
+                        onDelete(viewModel.location)
                         dismiss()
                     }
                 }
@@ -95,7 +80,7 @@ struct EditLocation: View {
         components.host = "en.wikipedia.org"
         components.path = "/w/api.php"
         components.queryItems = [
-            URLQueryItem(name: "ggscoord", value: "\(location.latitude)|\(location.longitude)"),
+            URLQueryItem(name: "ggscoord", value: "\(viewModel.location.latitude)|\(viewModel.location.longitude)"),
             URLQueryItem(name: "action", value: "query"),
             URLQueryItem(name: "prop", value: "coordinates|pageimages|pageterms"),
             URLQueryItem(name: "colimit", value: "50"),
@@ -114,10 +99,10 @@ struct EditLocation: View {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 print(String(data: data, encoding: .utf8)!)
                 let items = try JSONDecoder().decode(Result.self, from: data)
-                pages = items.query.pages.values.sorted(by: { $0.title < $1.title })
-                loadingState = .loaded
+                viewModel.pages = items.query.pages.values.sorted(by: { $0.title < $1.title })
+                viewModel.loadingState = .loaded
             } catch {
-                loadingState = .failed
+                viewModel.loadingState = .failed
             }
         }
     }

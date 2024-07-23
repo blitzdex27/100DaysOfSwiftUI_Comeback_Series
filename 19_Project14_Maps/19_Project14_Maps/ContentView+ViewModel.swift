@@ -20,7 +20,17 @@ extension ContentView {
         
         var isUnlocked = false
         
-        private(set) var mapStyle: MapStyle = .standard
+        var mapStyle: PickerItemMapStyle = PickerItemMapStyle(name: "Standard", mapStyle: .standard)
+        
+        let mapStyles: [PickerItemMapStyle] = [
+            PickerItemMapStyle(name: "Standard", mapStyle: .standard),
+            PickerItemMapStyle(name: "Hybrid", mapStyle: .hybrid),
+            PickerItemMapStyle(name: "Imagery", mapStyle: .imagery),
+        ]
+        
+        var showingAuthErrorAlert = false
+        
+        private(set) var authError: String?
         
         init() {
             do {
@@ -73,11 +83,13 @@ extension ContentView {
                     if success {
                         self.isUnlocked = true
                     } else {
-                        // error
+                        self.authError = authenticationError?.localizedDescription
+                        self.showingAuthErrorAlert = true
                     }
                 }
             } else {
-                // no bio
+                authError = error?.localizedDescription
+                showingAuthErrorAlert = true
             }
                 
         }
