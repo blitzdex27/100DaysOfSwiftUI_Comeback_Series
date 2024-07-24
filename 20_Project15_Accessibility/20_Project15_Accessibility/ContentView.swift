@@ -36,18 +36,17 @@ struct ContentView: View {
                 value -= 1
             }
         }
-        .accessibilityElement()
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("Value")
-        .accessibilityValue(String(value))
-        .accessibilityAdjustableAction { direction
-            in
+        .accessibilityValue("\(value)")
+        .accessibilityAdjustableAction { direction in
             switch direction {
             case .increment:
                 value += 1
             case .decrement:
                 value -= 1
             @unknown default:
-                print("Not handled")
+                print("not handled")
             }
         }
         
