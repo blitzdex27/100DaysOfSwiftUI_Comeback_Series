@@ -106,6 +106,7 @@ struct ContentView: View {
                 .opacity(choice == tappedFlag ? 1 : 0.25)
                 .transition(.scale)
                 .scaleEffect(choice == tappedFlag ? 1 : 0.75)
+                .accessibilityLabel(choice.accessibilityLabel)
             }
             
         }
