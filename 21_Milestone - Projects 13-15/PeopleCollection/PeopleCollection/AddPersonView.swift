@@ -15,19 +15,36 @@ struct AddPersonView: View {
     
     @State var name = ""
     var body: some View {
-        VStack {
-            TextField("Input name", text: $name)
-            Button("Add") {
-                onAdd(imageData, name)
-                dismiss()
+        NavigationStack {
+            VStack {
+                Image(data: imageData)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                Spacer()
+                TextField("Input name", text: $name)
+                Spacer()
             }
+            .navigationTitle("Add Person")
+            .toolbar(content: {
+                ToolbarItem {
+                    Button("Save", systemImage: "checkmark") {
+                        onAdd(imageData, name)
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", role: .cancel) {
+                        dismiss()
+                    }
+                }
+            })
         }
         
     }
 }
 
 #Preview {
-    AddPersonView(imageData: Date()) { imagedata, name in
+    AddPersonView(imageData: Data()) { imagedata, name in
         
     }
 }

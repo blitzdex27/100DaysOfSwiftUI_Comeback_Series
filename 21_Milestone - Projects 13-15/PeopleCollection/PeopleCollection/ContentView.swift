@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
-    private let 
+    private let peopleStore = PeopleStore()
     
     @State var selectedPhoto: PhotosPickerItem?
     @State var extractedImage: ExtractedImage?
@@ -17,7 +17,22 @@ struct ContentView: View {
         NavigationStack {
   
             VStack {
-                
+                List {
+                    ForEach(peopleStore.people.sorted()) { person in
+                        NavigationLink {
+                            Text(person.name)
+                        } label: {
+                            HStack {
+                                Image(data: person.imageData)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 50, height: 50)
+                                Text(person.name)
+                            }
+                        }
+
+                    }
+                }
             }
             .navigationTitle("People Collection")
             .toolbar(content: {
@@ -29,7 +44,7 @@ struct ContentView: View {
             .sheet(item: $extractedImage) { extractedImage in
                 
                 AddPersonView(imageData: extractedImage.data) { imageData, name in
-                    
+                    peopleStore.people.append(Person(imageData: imageData, name: name))
                 }
             }
             .onChange(of: selectedPhoto) { oldValue, newValue in
@@ -47,8 +62,10 @@ struct ContentView: View {
         
         do {
             
-            let data = try await item.loadTransferable(type: Data.self)
-            
+            if let data = try await item.loadTransferable(type: Data.self) {
+                let extractedImage = ExtractedImage(data: data)
+                self.extractedImage = extractedImage
+            }
             
         } catch {
             
@@ -58,4 +75,14 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+extension Image {
+    init(data: Data) {
+        if let uiiMage = UIImage(data: data) {
+            self.init(uiImage: uiiMage)
+        } else {
+            self.init(systemName: "photo")
+        }
+    }
 }

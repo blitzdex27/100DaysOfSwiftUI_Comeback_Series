@@ -7,6 +7,7 @@
 
 import Foundation
 
+@Observable
 class PeopleStore {
     var people: [Person] {
         didSet {
