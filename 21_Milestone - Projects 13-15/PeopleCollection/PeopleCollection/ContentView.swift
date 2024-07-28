@@ -24,9 +24,7 @@ struct ContentView: View {
             VStack {
                 List {
                     ForEach(people) { person in
-                        NavigationLink {
-                            Text(person.name)
-                        } label: {
+                        NavigationLink(value: person) {
                             HStack {
                                 Image(data: person.imageData)
                                     .resizable()
@@ -35,8 +33,13 @@ struct ContentView: View {
                                 Text(person.name)
                             }
                         }
-
+                        
                     }
+                    .onDelete(perform: { indexSet in
+                        for index in indexSet {
+                            context.delete(people[index])
+                        }
+                    })
                 }
             }
             .navigationTitle("People Collection")
@@ -45,6 +48,9 @@ struct ContentView: View {
                     PhotosPicker("Add person", selection: $selectedPhoto, matching: .images)
                     
                 }
+            })
+            .navigationDestination(for: Person.self, destination: { person in
+                PersonDetailView(person: person)
             })
             .sheet(item: $extractedImage) { extractedImage in
                 
