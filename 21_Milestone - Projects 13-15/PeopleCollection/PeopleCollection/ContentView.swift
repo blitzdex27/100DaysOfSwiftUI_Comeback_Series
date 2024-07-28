@@ -7,9 +7,14 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftData
 
 struct ContentView: View {
-    private let peopleStore = PeopleStore()
+//    private let peopleStore = PeopleStore()
+    @Environment(\.modelContext) var context
+    @Query(sort: [
+        SortDescriptor(\Person.name)
+    ]) var people: [Person]
     
     @State var selectedPhoto: PhotosPickerItem?
     @State var extractedImage: ExtractedImage?
@@ -18,7 +23,7 @@ struct ContentView: View {
   
             VStack {
                 List {
-                    ForEach(peopleStore.people.sorted()) { person in
+                    ForEach(people) { person in
                         NavigationLink {
                             Text(person.name)
                         } label: {
@@ -44,7 +49,12 @@ struct ContentView: View {
             .sheet(item: $extractedImage) { extractedImage in
                 
                 AddPersonView(imageData: extractedImage.data) { imageData, name in
-                    peopleStore.people.append(Person(imageData: imageData, name: name))
+//                    peopleStore.people.append(Person(imageData: imageData, name: name))
+                    
+//                    people.append()
+                    let person = Person(imageData: imageData, name: name)
+                    
+                    context.insert(person)
                 }
             }
             .onChange(of: selectedPhoto) { oldValue, newValue in
