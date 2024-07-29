@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3446BF7B2C578AFA009EDF0C /* SamplePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 3446BF7A2C578AFA009EDF0C /* SamplePackage */; };
 		345E94072C5770850079C1EE /* HotProspectsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345E94062C5770850079C1EE /* HotProspectsApp.swift */; };
 		345E94092C5770850079C1EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345E94082C5770850079C1EE /* ContentView.swift */; };
 		345E940B2C5770860079C1EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 345E940A2C5770860079C1EE /* Assets.xcassets */; };
@@ -19,6 +20,8 @@
 		3446BF752C577F82009EDF0C /* part3.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part3.md; sourceTree = "<group>"; };
 		3446BF762C5780FF009EDF0C /* part4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part4.md; sourceTree = "<group>"; };
 		3446BF772C578337009EDF0C /* part5.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part5.md; sourceTree = "<group>"; };
+		3446BF782C578816009EDF0C /* part6.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part6.md; sourceTree = "<group>"; };
+		3446BF7C2C578EFA009EDF0C /* part7.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part7.md; sourceTree = "<group>"; };
 		345E94032C5770850079C1EE /* HotProspects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotProspects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		345E94062C5770850079C1EE /* HotProspectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotProspectsApp.swift; sourceTree = "<group>"; };
 		345E94082C5770850079C1EE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3446BF7B2C578AFA009EDF0C /* SamplePackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +68,8 @@
 				3446BF752C577F82009EDF0C /* part3.md */,
 				3446BF762C5780FF009EDF0C /* part4.md */,
 				3446BF772C578337009EDF0C /* part5.md */,
+				3446BF782C578816009EDF0C /* part6.md */,
+				3446BF7C2C578EFA009EDF0C /* part7.md */,
 				345E940C2C5770860079C1EE /* Preview Content */,
 			);
 			path = HotProspects;
@@ -93,6 +99,9 @@
 			dependencies = (
 			);
 			name = HotProspects;
+			packageProductDependencies = (
+				3446BF7A2C578AFA009EDF0C /* SamplePackage */,
+			);
 			productName = HotProspects;
 			productReference = 345E94032C5770850079C1EE /* HotProspects.app */;
 			productType = "com.apple.product-type.application";
@@ -121,6 +130,9 @@
 				Base,
 			);
 			mainGroup = 345E93FA2C5770850079C1EE;
+			packageReferences = (
+				3446BF792C578AFA009EDF0C /* XCRemoteSwiftPackageReference "SamplePackage" */,
+			);
 			productRefGroup = 345E94042C5770850079C1EE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -352,6 +364,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3446BF792C578AFA009EDF0C /* XCRemoteSwiftPackageReference "SamplePackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/SamplePackage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3446BF7A2C578AFA009EDF0C /* SamplePackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3446BF792C578AFA009EDF0C /* XCRemoteSwiftPackageReference "SamplePackage" */;
+			productName = SamplePackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 345E93FB2C5770850079C1EE /* Project object */;
 }

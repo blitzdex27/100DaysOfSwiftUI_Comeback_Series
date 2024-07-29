@@ -1,14 +1,6 @@
-//
-//  ContentView.swift
-//  HotProspects
-//
-//  Created by Dexter  on 7/29/24.
-//
+#  <#Title#>
 
-import SwiftUI
-import UserNotifications
-import SamplePackage
-
+```
 struct ContentView: View {
     let possibleNumbers = 1...60
     
@@ -22,6 +14,4 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}
+```
