@@ -18,6 +18,7 @@
 		3446BF742C577D22009EDF0C /* part2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part2.md; sourceTree = "<group>"; };
 		3446BF752C577F82009EDF0C /* part3.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part3.md; sourceTree = "<group>"; };
 		3446BF762C5780FF009EDF0C /* part4.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part4.md; sourceTree = "<group>"; };
+		3446BF772C578337009EDF0C /* part5.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = part5.md; sourceTree = "<group>"; };
 		345E94032C5770850079C1EE /* HotProspects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotProspects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		345E94062C5770850079C1EE /* HotProspectsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotProspectsApp.swift; sourceTree = "<group>"; };
 		345E94082C5770850079C1EE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 				3446BF742C577D22009EDF0C /* part2.md */,
 				3446BF752C577F82009EDF0C /* part3.md */,
 				3446BF762C5780FF009EDF0C /* part4.md */,
+				3446BF772C578337009EDF0C /* part5.md */,
 				345E940C2C5770860079C1EE /* Preview Content */,
 			);
 			path = HotProspects;

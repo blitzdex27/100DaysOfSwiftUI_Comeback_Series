@@ -1,12 +1,6 @@
-//
-//  ContentView.swift
-//  HotProspects
-//
-//  Created by Dexter  on 7/29/24.
-//
+#  <#Title#>
 
-import SwiftUI
-
+```
 struct ContentView: View {
     
     var body: some View {
@@ -27,7 +21,4 @@ struct ContentView: View {
     
    
 }
-
-#Preview {
-    ContentView()
-}
+```
