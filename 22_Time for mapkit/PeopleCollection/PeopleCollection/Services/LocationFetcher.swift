@@ -28,6 +28,8 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate {
     
     private let progressTotal = 5.0
     
+    private var isFetchingLocation = false
+    
     override init() {
         super.init()
         manager.delegate = self
@@ -36,10 +38,16 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate {
     
     func getLocation() async throws -> (location: CLLocation, address: String?) {
 //        manager.requestWhenInUseAuthorization()
+        isFetchingLocation = true
         return try await withCheckedThrowingContinuation { [weak self] continuation in
             guard let self = self else {
                 return
             }
+            guard self.isFetchingLocation else {
+                return
+            }
+            self.isFetchingLocation = false
+            
             self.manager.requestWhenInUseAuthorization()
             
             self.setSuccess({ location, address in
