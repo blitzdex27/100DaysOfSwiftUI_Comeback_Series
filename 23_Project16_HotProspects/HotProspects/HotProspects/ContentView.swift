@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
         TabView {
             ProspectsView(filter: .none)
@@ -22,7 +23,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Uncontacted", systemImage: "questionmark.diamond")
                 }
-            MeView()
+            MeView(name: "Deks", emailAddress: "dex@gmail.com")
                 .tabItem {
                     Label("Me", systemImage: "person.crop.square")
                 }
