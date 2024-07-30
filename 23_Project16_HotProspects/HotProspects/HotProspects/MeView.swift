@@ -23,9 +23,12 @@ struct MeView: View {
             .contextMenu {
                 ShareLink(item: Image(uiImage: qrCode), preview: SharePreview("My QR Code", image: Image(uiImage: qrCode)))
             }
-            .onAppear {
-                qrCode = QRCode.generate(from: "\(name)\n\(emailAddress)")
-            }
+            .onAppear(perform: updateCode)
+            .onChange(of: name, updateCode)
+            .onChange(of: emailAddress, updateCode)
+    }
+    func updateCode() {
+        qrCode = QRCode.generate(from: "\(name)\n\(emailAddress)")
     }
 }
 

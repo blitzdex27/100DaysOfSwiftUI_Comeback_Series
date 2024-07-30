@@ -13,6 +13,8 @@ struct ProspectsView: View {
     @Environment(\.modelContext) var modelContext
     let filter: FilterType
     
+    @State private var showingReminderScheduled = false
+    
     var title: String {
         switch filter {
         case .none:
@@ -43,6 +45,49 @@ struct ProspectsView: View {
                         .font(.headline)
                     Text(prospect.emailAddress)
                         .foregroundStyle(.secondary)
+                }
+                .swipeActions {
+                    Button("Remind", systemImage: "bell") {
+                        addNotification(for: prospect)
+                    }
+                    .tint(.orange)
+                }
+            }
+            .navigationTitle(title)
+            .alert("Alert scheduled!", isPresented: $showingReminderScheduled, actions: {})
+        }
+    }
+    
+    func addNotification(for prospect: Prospect) {
+        let center = UNUserNotificationCenter.current()
+        
+        let addRequest = {
+            
+            let content = UNMutableNotificationContent()
+            content.title = "Contact \(prospect.name)"
+            content.subtitle = prospect.emailAddress
+            content.sound = UNNotificationSound.default
+            
+
+//            var components = Calendar.current.dateComponents([.second], from: .now)
+//            components.second! += 3
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: trigger, repeats: false)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            center.add(request)
+            showingReminderScheduled = true
+        }
+        
+        center.getNotificationSettings { settings in
+            if settings.authorizationStatus == .authorized {
+                addRequest()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        addRequest()
+                    } else if let error {
+                        print(error.localizedDescription)
+                    }
                 }
             }
         }

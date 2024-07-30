@@ -17,12 +17,13 @@ class QRCode {
     func generate(from string: String) -> UIImage {
         let data = Data(string.utf8)
         filter.message = data
+        
         if let outputImage = filter.outputImage {
             if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
                 return UIImage(cgImage: cgImage)
             }
         }
-        return UIImage(systemName: "xmar.circle") ?? UIImage()
+        return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
     
     static func generate(from string: String) -> UIImage {
