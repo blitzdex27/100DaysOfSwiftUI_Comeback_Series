@@ -25,7 +25,7 @@ struct ProspectViewList: View {
         case .name:
             sortDescriptor = SortDescriptor(\Prospect.name)
         case .date:
-            sortDescriptor = SortDescriptor(\Prospect.dateCreated)
+            sortDescriptor = SortDescriptor(\Prospect.dateCreated, order: .reverse)
         }
         
         
@@ -111,7 +111,7 @@ struct ProspectViewList: View {
     }
     enum SortMethod: String, CaseIterable {
         case name = "Name"
-        case date = "Date"
+        case date = "Most Recent"
     }
 }
 //
