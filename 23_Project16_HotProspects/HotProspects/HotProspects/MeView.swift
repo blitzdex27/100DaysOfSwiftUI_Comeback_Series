@@ -22,6 +22,7 @@ struct MeView: View {
             .frame(width: 200, height: 200)
             .contextMenu {
                 ShareLink(item: Image(uiImage: qrCode), preview: SharePreview("My QR Code", image: Image(uiImage: qrCode)))
+                Image(.example)
             }
             .onAppear(perform: updateCode)
             .onChange(of: name, updateCode)

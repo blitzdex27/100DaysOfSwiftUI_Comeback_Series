@@ -9,11 +9,13 @@ import SwiftUI
 import SwiftData
 
 struct ProspectsView: View {
-    @Query(sort: \Prospect.name) var prospects: [Prospect]
     @Environment(\.modelContext) var modelContext
-    let filter: FilterType
     
-    @State private var showingReminderScheduled = false
+    let filter: ProspectViewList.FilterType
+    
+    @State private var sortMethod: ProspectViewList.SortMethod = .name
+    
+    @State private var showingProspectView = false
     
     var title: String {
         switch filter {
@@ -26,79 +28,42 @@ struct ProspectsView: View {
         }
     }
     
-    init(filter: FilterType) {
+    init(filter: ProspectViewList.FilterType) {
         self.filter = filter
-        let showContactedOnly = filter == .contacted
-        
-        if filter != .none {
-            _prospects = Query(filter: #Predicate {
-                $0.isContacted == showContactedOnly
-            }, sort: [SortDescriptor(\Prospect.name)])
-        }
     }
     
     var body: some View {
         NavigationStack {
-            List(prospects) { prospect in
-                VStack(alignment: .leading) {
-                    Text(prospect.name)
-                        .font(.headline)
-                    Text(prospect.emailAddress)
-                        .foregroundStyle(.secondary)
-                }
-                .swipeActions {
-                    Button("Remind", systemImage: "bell") {
-                        addNotification(for: prospect)
-                    }
-                    .tint(.orange)
-                }
-            }
+            ProspectViewList(filter: filter, sort: sortMethod)
             .navigationTitle(title)
-            .alert("Alert scheduled!", isPresented: $showingReminderScheduled, actions: {})
-        }
-    }
-    
-    func addNotification(for prospect: Prospect) {
-        let center = UNUserNotificationCenter.current()
-        
-        let addRequest = {
-            
-            let content = UNMutableNotificationContent()
-            content.title = "Contact \(prospect.name)"
-            content.subtitle = prospect.emailAddress
-            content.sound = UNNotificationSound.default
-            
-
-//            var components = Calendar.current.dateComponents([.second], from: .now)
-//            components.second! += 3
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: trigger, repeats: false)
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-            center.add(request)
-            showingReminderScheduled = true
-        }
-        
-        center.getNotificationSettings { settings in
-            if settings.authorizationStatus == .authorized {
-                addRequest()
-            } else {
-                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                    if success {
-                        addRequest()
-                    } else if let error {
-                        print(error.localizedDescription)
+            .toolbar {
+                ToolbarItem {
+                    Menu(sortMethod.rawValue, systemImage: "arrow.up.arrow.down") {
+                        Picker("''", selection: $sortMethod) {
+                            ForEach(ProspectViewList.SortMethod.allCases, id: \.self) { sort in
+                                Text(sort.rawValue)
+                            }
+                        }
                     }
+                }
+                ToolbarItem {
+                    Button("Add") {
+                        showingProspectView = true
+                    }
+                }
+            }
+            .sheet(isPresented: $showingProspectView) {
+                EditProspectView { prospect in
+                    modelContext.insert(prospect)
                 }
             }
         }
     }
     
-    enum FilterType {
-        case none, contacted, uncontacted
-    }
+  
 }
 
-#Preview {
-    ProspectsView(filter: .none)
-        .modelContainer(for: Prospect.self)
-}
+//#Preview {
+//    ProspectsView(filter: .none)
+//        .modelContainer(for: Prospect.self)
+//}

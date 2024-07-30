@@ -13,10 +13,12 @@ class Prospect {
     var name: String
     var emailAddress: String
     var isContacted: Bool
+    var dateCreated: Date
     
     init(name: String, emailAddress: String, isContacted: Bool) {
         self.name = name
         self.emailAddress = emailAddress
         self.isContacted = isContacted
+        self.dateCreated = .now
     }
 }
