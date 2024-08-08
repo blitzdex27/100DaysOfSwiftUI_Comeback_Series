@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditCards: View {
     @Environment(\.dismiss) var dismiss
-    @State private var cards = [Card]()
+    @Environment(\.modelContext) var modelContext
+    @Query private var cards: [Card]
     
     @State var newPrompt: String = ""
     @State var newAnswer: String = ""
@@ -37,13 +39,14 @@ struct EditCards: View {
             .toolbar {
                 Button("Done", action: done)
             }
-            .onAppear(perform: loadData)
         }
     }
     
     func removeCards(_ indexSet: IndexSet) {
-        cards.remove(atOffsets: indexSet)
-        save()
+        
+        var cardsToRemove = indexSet.map({ cards[$0] })
+        
+        cardsToRemove.forEach({ modelContext.delete($0) })
     }
     
     func addCard() {
@@ -58,8 +61,7 @@ struct EditCards: View {
             answer: newAnswer
         )
         
-        cards.insert(card, at: 0)
-        save()
+        modelContext.insert(card)
         resetFields()
     }
     
@@ -68,10 +70,6 @@ struct EditCards: View {
         if let data = try? JSONEncoder().encode(cards) {
             UserDefaults.standard.set(data, forKey: "Cards")
         }
-    }
-    
-    func loadData() {
-        cards = CardStore.loadData()
     }
     
     func done() {

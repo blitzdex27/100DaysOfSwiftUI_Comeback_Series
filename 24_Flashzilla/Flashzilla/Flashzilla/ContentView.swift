@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityEnabled) private var accessibilityEnabled
     @Environment(\.accessibilityDifferentiateWithoutColor) private var accessibilityDifferentiateWithoutColor
     
-    @State private var cards = [Card]()//Array(repeating: Card.example, count: 10)
+    @Query private var cards: [Card]//Array(repeating: Card.example, count: 10)
+    @State private var gameCards = [Card]()
+    
     @State private var timeRemaining = 100
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var isActive = true
@@ -32,16 +35,16 @@ struct ContentView: View {
                     .background(.black.opacity(0.75))
                     .clipShape(.capsule)
                 ZStack {
-                    ForEach(cards) { card in
-                        let index = cards.firstIndex(where: { $0 == card})!
+                    ForEach(gameCards) { card in
+                        let index = gameCards.firstIndex(where: { $0 == card})!
                         CardView(card: card){ isCorrect in
                             withAnimation {
                                 removeCard(at: index, isCorrect: isCorrect)
                             }
                         }
-                        .stacked(at: index, in: cards.count)
-                        .allowsHitTesting(index == cards.count - 1)
-                        .accessibilityHidden(index < cards.count - 1)
+                        .stacked(at: index, in: gameCards.count)
+                        .allowsHitTesting(index == gameCards.count - 1)
+                        .accessibilityHidden(index < gameCards.count - 1)
                     }
 //                    ForEach(cards) { card in
 //                        let index = cards.firstIndex(where: { $0 == card})
@@ -57,7 +60,7 @@ struct ContentView: View {
                 }
                 .allowsHitTesting(timeRemaining > 0)
                 
-                if cards.isEmpty {
+                if gameCards.isEmpty {
                     Button("Start Again", action: resetCards)
                         .padding()
                         .background(.white)
@@ -124,7 +127,7 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase) {
             if scenePhase == .active {
-                if cards.isEmpty == false {
+                if gameCards.isEmpty == false {
                     isActive = true
                 }
             } else {
@@ -141,30 +144,26 @@ struct ContentView: View {
         var cardToTryAgain: Card?
         
         if !isCorrect {
-            cardToTryAgain = cards[index]
+            cardToTryAgain = gameCards[index]
             cardToTryAgain?.id = UUID()
 
         }
 //        
-        cards.remove(at: index)
+        gameCards.remove(at: index)
         
         if let cardToTryAgain {
-            cards.insert(cardToTryAgain, at: 0)
-            cards.forEach({ print($0.prompt)})
+            gameCards.insert(cardToTryAgain, at: 0)
+            gameCards.forEach({ print($0.prompt)})
         }
 
-        if cards.isEmpty {
+        if gameCards.isEmpty {
             isActive = false
         }
     }
     func resetCards() {
         timeRemaining = 100
         isActive = true
-        cards.removeAll()
-        loadData()
-    }
-    func loadData() {
-        cards = CardStore.loadData()
+        gameCards = cards
     }
 }
 

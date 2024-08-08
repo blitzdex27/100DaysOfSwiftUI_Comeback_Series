@@ -71,7 +71,7 @@ struct CardView: View {
         )
 
         .rotationEffect(.degrees(offset.width / 5.0))
-        .offset(x: offset.width * 5)
+        .offset(x: offset.width * 1)
 //        .opacity(2 - abs(offset.width) / 50.0)
         .accessibilityAddTraits(.isButton)
         .gesture(
@@ -86,13 +86,14 @@ struct CardView: View {
                     } else if offset.width < -100 {
                         removal?(false)
                     } else {
-//                        withAnimation {
+                        withAnimation {
                             offset = .zero
-//                        }
+                        }
                     }
+                    offset = .zero
                 })
         )
-        .animation(.bouncy, value: offset)
+//        .animation(.bouncy, value: offset)
     }
 }
 
