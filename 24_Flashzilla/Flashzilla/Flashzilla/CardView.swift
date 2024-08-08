@@ -10,8 +10,10 @@ import SwiftUI
 struct CardView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) private var accessibilityDifferentiateWithoutColor
     let card: Card
+    @Environment(\.accessibilityVoiceOverEnabled) private var accessibilityVoiceOverEnabled
     
-    var removal: (() -> Void)? = nil
+    var removal: ((Bool) -> Void)? = nil
+    
     
     @State private var offset: CGSize = CGSize.zero
     
@@ -41,13 +43,19 @@ struct CardView: View {
                 }
                 .shadow(radius: 10)
             VStack {
-                Text(card.prompt)
-                    .font(.largeTitle)
-                    .foregroundStyle(.black)
-                if isShowingAnswer {
-                    Text(card.answer)
-                        .font(.title)
-                        .foregroundStyle(.secondary)
+                if accessibilityVoiceOverEnabled {
+                    Text(isShowingAnswer ? card.answer : card.prompt)
+                        .font(.largeTitle)
+                        .foregroundStyle(.black)
+                } else {
+                    Text(card.prompt)
+                        .font(.largeTitle)
+                        .foregroundStyle(.black)
+                    if isShowingAnswer {
+                        Text(card.answer)
+                            .font(.title)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             .padding(20)
@@ -56,15 +64,16 @@ struct CardView: View {
         }
         .frame(width: 450, height: 250)
         .gesture(
-            TapGesture()
+            TapGesture(count: 2)
                 .onEnded({ _ in
                     isShowingAnswer.toggle()
                 })
         )
+
         .rotationEffect(.degrees(offset.width / 5.0))
         .offset(x: offset.width * 5)
-        .opacity(2 - abs(offset.width) / 50.0)
-        
+//        .opacity(2 - abs(offset.width) / 50.0)
+        .accessibilityAddTraits(.isButton)
         .gesture(
             DragGesture()
                 .onChanged({ value in
@@ -72,16 +81,18 @@ struct CardView: View {
                     offset = value.translation
                 })
                 .onEnded({ value in
-                    if abs(offset.width) > 100 {
-                        removal?()
+                    if offset.width > 100 {
+                        removal?(true)
+                    } else if offset.width < -100 {
+                        removal?(false)
                     } else {
-                        withAnimation {
+//                        withAnimation {
                             offset = .zero
-                        }
+//                        }
                     }
                 })
         )
-        
+        .animation(.bouncy, value: offset)
     }
 }
 
