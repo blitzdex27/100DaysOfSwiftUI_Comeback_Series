@@ -27,6 +27,7 @@ struct DiceCollectionView: View {
         GridItem(.fixed(100)),
         GridItem(.fixed(100))
     ]
+    
     var body: some View {
         VStack {
             LazyVGrid(columns: gridItems) {
