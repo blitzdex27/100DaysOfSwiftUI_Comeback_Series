@@ -28,23 +28,10 @@ struct ContentView: View {
                             )
                             .opacity(proxy.frame(in: .global).minY / 200)
                             .scaleEffect(
-                                
-                                {
-                                    let screenHeight = fullView.size.height
-                                    let screenMidY = screenHeight / 2
-                                    let midY = proxy.frame(in: .global).midY
-                                    
-                                    let midYOffset = midY - screenMidY
-                                    
-                                    let offsetPercentage = midYOffset / screenMidY
-                                    let scale = (offsetPercentage * 0.5)
-                                    
-                                    let scaleFactor = 1 + min(scale, 0.5)
-                                    
-                                    return scaleFactor
-                                }()
-                                
-                                
+                                scale(
+                                    for: fullView.size.height,
+                                    midY: proxy.frame(in: .global).midY
+                                )
                             )
                             .rotation3DEffect(
                                 .degrees(proxy.frame(in: .global).minY - fullView.size.width / 2) / 5,
@@ -58,7 +45,19 @@ struct ContentView: View {
             }
         }
         
+     
+    }
+    func scale(for screenHeight: CGFloat, midY: CGFloat) -> CGFloat {
+        let screenMidY = screenHeight / 2
         
+        let midYOffset = midY - screenMidY
+        
+        let offsetPercentage = midYOffset / screenMidY
+        let scale = (offsetPercentage * 0.5)
+        
+        let scaleFactor = 1 + min(scale, 0.5)
+        
+        return scaleFactor
     }
 }
 
