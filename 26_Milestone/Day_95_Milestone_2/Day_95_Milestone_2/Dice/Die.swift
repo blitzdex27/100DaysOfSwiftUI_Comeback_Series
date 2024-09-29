@@ -6,6 +6,7 @@
 //
 import Foundation
 
+@Observable
 class Die: Identifiable, Codable {
     var id: UUID
     var sideCount: Int
@@ -22,6 +23,38 @@ class Die: Identifiable, Codable {
         let result = roller.roll(dice: self)
         facedUpSide = result
         return result
+    }
+    
+    func dynamicRoll(with roller: DiceRollerProtocol = .default(), completion: @escaping (Die) -> Void) {
+        let result = roller.roll(dice: self)
+        
+        let numberOfPseudoRolls = Int.random(in: 1...6)
+        
+        var pseudoResults = Set<Int>()
+        
+        while pseudoResults.count < numberOfPseudoRolls {
+            pseudoResults.insert(Int.random(in: 1...self.sideCount))
+        }
+        
+        
+        
+        var arrayed = Array(pseudoResults)
+        arrayed.shuffle()
+        arrayed.insert(result, at: 0)
+
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+            if let popped = arrayed.popLast() {
+                DispatchQueue.main.async {
+                    self.facedUpSide = popped
+                    
+                }
+
+            } else {
+                completion(self)
+                timer.invalidate()
+            }
+        }
+        
     }
     
     func reset() {

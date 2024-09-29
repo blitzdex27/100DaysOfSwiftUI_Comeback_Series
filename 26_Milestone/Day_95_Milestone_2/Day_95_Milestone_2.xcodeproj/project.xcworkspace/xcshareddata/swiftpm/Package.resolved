@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/blitzdex27/DekiPersistable.git",
       "state" : {
-        "revision" : "d7389b369e8753941192f332846bf0f4387a9dfc",
-        "version" : "1.0.2"
+        "revision" : "cc459e99aa8c602b72efea5abf2957ddb5146346",
+        "version" : "1.1.1"
       }
     }
   ],

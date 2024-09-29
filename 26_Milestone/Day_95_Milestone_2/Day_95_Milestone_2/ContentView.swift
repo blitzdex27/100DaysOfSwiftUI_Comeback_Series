@@ -9,15 +9,16 @@ import SwiftUI
 import CoreHaptics
 
 struct ContentView: View {
-    @State var isRolling = false
     
-    @State var reset = false
+    @State var defaultDiceCount: Int = 1
+    
+    @State var defaultSideCount: Int = 6
     
     @State var result = 0
     
     @State var useSaved = true
     
-    @State var savedDiceCollection: DiceCollection?
+    @State var diceCollection: DiceCollection?
     
     @State private var engine: CHHapticEngine?
     
@@ -25,29 +26,23 @@ struct ContentView: View {
         VStack {
             ResultView(result: $result)
                 
-            if let savedDiceCollection, useSaved {
-                DiceCollectionView(isRolling: $isRolling, reset: $reset, diceCollection: savedDiceCollection, showControl: false) { results in
-                    result = results.total
-                } didReset: {
-                    result = 0
-                }
-
-            }
-            
-            if !useSaved {
-                DiceCollectionView(isRolling: $isRolling, reset: $reset, dieCount: 100, sideCount: 6, showControl: false) { results in
+            if let diceCollection {
+                DiceCollectionView(diceCollection: diceCollection) { results in
                     result = results.total
                 } didReset: {
                     result = 0
                 }
             }
-            
-            
-    
             
             HStack {
                 Button(role: .destructive) {
-                    reset = true
+                    guard let diceCollection else {
+                        return
+                    }
+                    diceCollection.reset(at: IndexSet(0..<diceCollection.dice.count))
+                    Task {
+                        try await DiceCollection.delete()
+                    }
                     
                     let event = CHHapticEvent(eventType: .hapticTransient, parameters: [], relativeTime: 2)
                     let pattern = try! CHHapticPattern(events: [event], parameters: [])
@@ -60,18 +55,20 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity)
                 .buttonStyle(.borderedProminent)
                 Button {
-                    isRolling = true
+                    diceCollection?.dynamicRoll(completion: { _ in
+                        
+                    })
+                    Task {
+                        try await diceCollection?.save()
+                    }
                     
-                    if let savedDiceCollection {
+                    if let diceCollection {
                         var events = [CHHapticEvent]()
                         
-                        for i in stride(from: 0, to: Double(savedDiceCollection.dice.count), by: 0.1) {
-                            
-                            let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(i))
-                            let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: Float(i))
-                            let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: i)
-                            events.append(event)
-                        }
+                        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(1))
+                        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: Float(1))
+                        let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0.1)
+                        events.append(event)
                         
                         
                         do {
@@ -101,16 +98,19 @@ struct ContentView: View {
             Task {
                 do {
                     if useSaved {
-                        savedDiceCollection = try await DiceCollection.load()
-                        result = savedDiceCollection?.rollResults?.total ?? 0
+                        diceCollection = try await DiceCollection.load()
+                        result = diceCollection?.rollResults?.total ?? 0
+                    } else {
+                        diceCollection = DiceCollection.make(diceCount: defaultDiceCount, sideCount: defaultSideCount)
                     }
                 } catch {
-                    useSaved = false
+                    diceCollection = DiceCollection.make(diceCount: defaultDiceCount, sideCount: defaultSideCount)
                 }
             }
         })
         .padding()
     }
+    
 }
 
 #Preview {

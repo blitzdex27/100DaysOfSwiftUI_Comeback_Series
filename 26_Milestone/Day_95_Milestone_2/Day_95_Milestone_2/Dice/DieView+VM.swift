@@ -10,34 +10,34 @@ import Combine
 extension DieView {
     @Observable
     class ViewModel {
-        private var dice: Die
+        private(set) var die: Die
         
         var result: Int? {
-            dice.facedUpSide
-        }
-        
-        init(sides: Int) {
-            self.dice = Die(sideCount: sides)
+            die.facedUpSide
         }
         
         init(die: Die) {
-            self.dice = die
+            self.die = die
 
         }
         
         func roll() -> Int {
-            let result = dice.roll()
+            let result = die.roll()
             updateResult()
             return result
         }
         
+        func dynamicRoll(completion: @escaping (Die) -> Void) {
+            die.dynamicRoll(completion: completion)
+        }
+        
         func reset() {
-            dice.reset()
+            die.reset()
             updateResult()
         }
         
         private func updateResult() {
-//            result = dice.facedUpSide
+//            result = die.facedUpSide
         }
     }
 }

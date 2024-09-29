@@ -11,28 +11,15 @@ struct DieView: View {
     
     @State var viewModel: ViewModel
     
-    @Binding var isRolling: Bool
-    
-    let didFinishRoll: (Int) -> Void
-    
-    var showControl: Bool
+    let didFinishRoll: (Die) -> Void
     
     @State var rotationAngle: Double = 0
     
     @State private var preferredSideLength: Double = 1000
     
-    init(isRolling: Binding<Bool>, sides: Int = 6, showControl: Bool = true, didFinishRoll: @escaping (Int) -> Void) {
-        self._isRolling = isRolling
-        self.didFinishRoll = didFinishRoll
-        self.viewModel = ViewModel(sides: sides)
-        self.showControl = showControl
-    }
-    
-    init(isRolling: Binding<Bool>, die: Die, showControl: Bool = true, didFinishRoll: @escaping (Int) -> Void) {
-        self._isRolling = isRolling
+    init(die: Die, didFinishRoll: @escaping (Die) -> Void) {
         self.didFinishRoll = didFinishRoll
         self._viewModel = State(wrappedValue: ViewModel(die: die))
-        self.showControl = showControl
     }
     
     var body: some View {
@@ -46,7 +33,8 @@ struct DieView: View {
                         Text("??")
                     }
                 }
-//                .contentTransition(.numericText())
+                .minimumScaleFactor(0.5)
+                .contentTransition(.numericText())
                 .font(.system(size: fullView.size.width * 0.8))
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -55,22 +43,11 @@ struct DieView: View {
                 .frame(width: preferredSideLength(size: fullView.size), height: preferredSideLength(size: fullView.size))
             }
             .animation(.bouncy, value: viewModel.result)
-            
             .frame(idealWidth: preferredSideLength, idealHeight: preferredSideLength)
-            
-            if showControl {
-                if  viewModel.result == nil {
-                    Button("Roll", action: startRoll)
-                } else {
-                    Button("Reset", action: reset)
-                }
-            }
         }
-        .contentTransition(.numericText())
         .rotation3DEffect(Angle(degrees: rotationAngle), axis: (x: 1, y: 0, z: 0))
         
         .onChange(of: viewModel.result, {
-            print("viewModel.result  \(viewModel.result)")
 
             withAnimation(.linear) {
                 rotationAngle += 360
@@ -79,23 +56,17 @@ struct DieView: View {
             }
 
         })
-        .onChange(of: isRolling) {
-            if isRolling {
-                rollDice()
-            } else {
-                
-            }
-        }
     }
     
     func rollDice() {
         let result = viewModel.roll()
-        didFinishRoll(result)
-        isRolling = false
+        didFinishRoll(viewModel.die)
     }
     
-    func startRoll() {
-        isRolling = true
+    func rollDiceDynamically() {
+        viewModel.dynamicRoll { result in
+            didFinishRoll(viewModel.die)
+        }
     }
     
     func reset() {
@@ -117,16 +88,16 @@ struct DieView: View {
 }
 
 #Preview {
-    @Previewable @State var isRolling = false
-    DieView(isRolling: $isRolling, sides: 9) { result in
+    @Previewable @State var die = Die(sideCount: 6)
+    DieView(die: die) { result in
         print(result)
     }
     .frame(width: 200)
 }
 
 #Preview {
-    @Previewable @State var isRolling = false
-    DieView(isRolling: $isRolling, sides: 9, showControl: false) { result in
+    @Previewable @State var die = Die(sideCount: 6)
+    DieView(die: die) { result in
         print(result)
     }
 }
