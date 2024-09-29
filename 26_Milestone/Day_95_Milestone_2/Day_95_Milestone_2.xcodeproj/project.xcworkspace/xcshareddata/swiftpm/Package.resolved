@@ -1,0 +1,15 @@
+{
+  "originHash" : "71f2cae87227d03122ec31438553b9045fe8f8ec9271372a3b8fe304e098c602",
+  "pins" : [
+    {
+      "identity" : "dekipersistable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/blitzdex27/DekiPersistable.git",
+      "state" : {
+        "revision" : "d7389b369e8753941192f332846bf0f4387a9dfc",
+        "version" : "1.0.2"
+      }
+    }
+  ],
+  "version" : 3
+}
