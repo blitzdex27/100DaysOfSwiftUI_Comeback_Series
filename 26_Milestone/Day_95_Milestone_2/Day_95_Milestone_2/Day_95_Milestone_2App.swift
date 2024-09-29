@@ -11,7 +11,7 @@ import SwiftUI
 struct Day_95_Milestone_2App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(defaultDiceCount: 100, defaultSideCount: 100)
+            ContentView(defaultDiceCount: 20, defaultSideCount: 6)
         }
     }
 }
