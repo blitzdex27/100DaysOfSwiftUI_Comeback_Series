@@ -49,12 +49,21 @@ struct ProspectsView: View {
     var body: some View {
         NavigationStack {
             List(prospects, selection: $selectedProspects, rowContent: { prospect in
-                VStack(alignment: .leading) {
-                    Text(prospect.name)
-                        .font(.headline)
-                    Text(prospect.emailAddress)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(prospect.name)
+                            .font(.headline)
+                        Text(prospect.emailAddress)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    if filter == .none {
+                        Spacer()
+                        let name = prospect.isContacted ? "checkmark.circle" : "exclamationmark.circle"
+                        Image(systemName: name)
+                            .foregroundStyle(prospect.isContacted ? .green : .orange)
+                    }
+                    
                 }
                 .swipeActions {
                     Button("Delete", systemImage: "trash", role: .destructive) {
