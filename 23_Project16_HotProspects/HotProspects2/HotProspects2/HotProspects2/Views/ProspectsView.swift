@@ -70,11 +70,14 @@ struct ProspectsView: View {
                             prospect.isContacted.toggle()
                         }
                         .tint(.green)
+                        
+                        Button("Remind me", systemImage: "bell") {
+                            addNotification(for: prospect)
+                        }
+                        .tint(.orange)
                     }
                     
-                    Button("Add notification", systemImage: "notification.circle") {
-                        addNotification(for: prospect)
-                    }
+       
                 }
                 .tag(prospect)
             })
@@ -127,7 +130,10 @@ struct ProspectsView: View {
     
     func delete() {
         for selectedProspect in selectedProspects {
-            modelContext.delete(selectedProspect)
+            
+            if let prospect = selectedProspects.remove(selectedProspect) {
+                modelContext.delete(prospect)
+            }
         }
     }
     
