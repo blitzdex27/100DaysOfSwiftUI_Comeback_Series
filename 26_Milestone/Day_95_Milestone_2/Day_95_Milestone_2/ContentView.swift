@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreHaptics
+import OSLog
 
 struct ContentView: View {
     
@@ -31,6 +32,13 @@ struct ContentView: View {
                     result = results.total
                 } didReset: {
                     result = 0
+                }
+            }
+            
+            Picker("Die Count", selection: $defaultDiceCount) {
+                ForEach(1..<100) { num in
+                    Text("\(num)")
+                        .tag(num)
                 }
             }
             
@@ -107,6 +115,19 @@ struct ContentView: View {
                     diceCollection = DiceCollection.make(diceCount: defaultDiceCount, sideCount: defaultSideCount)
                 }
             }
+        })
+        .onChange(of: defaultDiceCount, {
+            
+            os_log(.info, "defaultDiceCount: \(defaultDiceCount)")
+            diceCollection = DiceCollection.make(diceCount: defaultDiceCount, sideCount: defaultSideCount)
+            
+        })
+        .onChange(of: defaultSideCount, {
+            Task {
+                try await DiceCollection.delete()
+                diceCollection = DiceCollection.make(diceCount: defaultDiceCount, sideCount: defaultSideCount)
+            }
+            
         })
         .padding()
     }

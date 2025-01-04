@@ -19,7 +19,7 @@ struct ProspectsView: View {
     
     let filter: FilterType
     @State var isShowingScanner = false
-    
+    @State var selectedProspects = Set<Prospect>()
     
     var title: String {
         switch filter {
@@ -45,7 +45,7 @@ struct ProspectsView: View {
     
     var body: some View {
         NavigationStack {
-            List(prospects, rowContent: { prospect in
+            List(prospects, selection: $selectedProspects, rowContent: { prospect in
                 VStack(alignment: .leading) {
                     Text(prospect.name)
                         .font(.headline)
@@ -53,12 +53,39 @@ struct ProspectsView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
+                .swipeActions {
+                    Button("Delete", systemImage: "trash", role: .destructive) {
+                        modelContext.delete(prospect)
+                    }
+                    if prospect.isContacted {
+                        Button("Mark uncontacted", systemImage: "person.crop.circle.badge.xmark") {
+                            prospect.isContacted.toggle()
+                        }
+                        .tint(.blue)
+                    } else {
+                        Button("Mark contacted", systemImage: "person.crop.circle.fill.badge.checkmark") {
+                            prospect.isContacted.toggle()
+                        }
+                        .tint(.green)
+                    }
+                }
+                .tag(prospect)
             })
                 .navigationTitle(title)
                 .toolbar {
-                    ToolbarItem {
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button("Scan", systemImage: "qrcode.viewfinder") {
                             isShowingScanner = true
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        EditButton()
+                    }
+                    
+                    if !selectedProspects.isEmpty {
+                        ToolbarItem(placement: .bottomBar) {
+                            Button("Delete selected", role: .destructive, action: delete)
                         }
                     }
                 }
@@ -80,6 +107,12 @@ struct ProspectsView: View {
             return
         }
         
+    }
+    
+    func delete() {
+        for selectedProspect in selectedProspects {
+            modelContext.delete(selectedProspect)
+        }
     }
 }
 

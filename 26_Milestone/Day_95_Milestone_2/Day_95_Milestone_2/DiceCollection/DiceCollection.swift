@@ -52,7 +52,7 @@ class DiceCollection: Codable, DekiPersistable {
         for index in offsets {
             dice[index].reset()
         }
-//        rollResults = RollResults(dice: dice)
+        rollResults = RollResults(dice: dice)
     }
 
 }
