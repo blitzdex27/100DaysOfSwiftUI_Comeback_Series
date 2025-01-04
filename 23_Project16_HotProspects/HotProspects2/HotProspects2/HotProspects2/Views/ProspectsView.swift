@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import CodeScanner
+import UserNotifications
 
 struct ProspectsView: View {
     enum FilterType {
@@ -20,6 +21,8 @@ struct ProspectsView: View {
     let filter: FilterType
     @State var isShowingScanner = false
     @State var selectedProspects = Set<Prospect>()
+    @State var isShowingNotificationPermissionAlert = false
+    @State var isShowingNotificationRequestSuccessAlert = false
     
     var title: String {
         switch filter {
@@ -68,6 +71,10 @@ struct ProspectsView: View {
                         }
                         .tint(.green)
                     }
+                    
+                    Button("Add notification", systemImage: "notification.circle") {
+                        addNotification(for: prospect)
+                    }
                 }
                 .tag(prospect)
             })
@@ -92,6 +99,15 @@ struct ProspectsView: View {
                 .sheet(isPresented: $isShowingScanner) {
                     CodeScannerView(codeTypes: [.qr], simulatedData: "Dexter Ramos\nblitzdex27@gmail.com", completion: handleScanResult)
                 }
+                .alert("Permission required", isPresented: $isShowingNotificationPermissionAlert) {
+                    Button("Modify settings") {
+                        UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
+                    }
+                    Button("Cancel") { }
+                }
+                .alert("Notification scheduled!", isPresented: $isShowingNotificationRequestSuccessAlert) {
+                    
+                }
         }
     }
     
@@ -112,6 +128,41 @@ struct ProspectsView: View {
     func delete() {
         for selectedProspect in selectedProspects {
             modelContext.delete(selectedProspect)
+        }
+    }
+    
+    func addNotification(for prospect: Prospect) {
+        let center = UNUserNotificationCenter.current()
+        
+        let addRequest = {
+            let content = UNMutableNotificationContent()
+            content.title = prospect.name
+            content.body = prospect.emailAddress
+            
+//            var dateComponents = DateComponents()
+//            dateComponents.hour = 9
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            center.add(request)
+            isShowingNotificationRequestSuccessAlert = true
+        }
+        // more code to come
+        center.getNotificationSettings { settings in
+            if settings.authorizationStatus == .authorized {
+                addRequest()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        addRequest()
+                    } else if let error {
+                        print(error.localizedDescription)
+                    } else {
+                        isShowingNotificationPermissionAlert = true
+                    }
+                }
+            }
         }
     }
 }
