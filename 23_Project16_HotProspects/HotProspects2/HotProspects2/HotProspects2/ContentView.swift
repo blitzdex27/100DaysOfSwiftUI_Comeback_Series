@@ -15,7 +15,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $tabConfig.selectedTab) {
-            ProspectsView(filter: .everyone)
+            ProspectsView(filter: .none)
                 .tabItem {
                     Label("Everyone", systemImage: "person.3")
                 }
@@ -42,4 +42,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: Prospect.self)
 }

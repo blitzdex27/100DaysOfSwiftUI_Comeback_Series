@@ -9,11 +9,21 @@ import SwiftUI
 
 struct MeView: View {
     @Environment(\.tabConfig) var tabConfig
+    
+    @AppStorage("name") var name = "Annonymous"
+    @AppStorage("emailAddress") private var emailAddress = "you@yoursite.com"
+    
     var body: some View {
-        VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            Button("Go to everyone") {
-                tabConfig.selectedTab = .everyone
+        NavigationStack {
+            Form {
+                TextField("Name", text: $name)
+                TextField("Email address", text: $emailAddress)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                Image(uiImage: "\(name)\n\(emailAddress)".generateQRCode())
+                    .resizable()
+                    .interpolation(.none)
+                    .scaledToFit()
             }
         }
     }
