@@ -19,6 +19,8 @@ struct MeView: View {
         NavigationStack {
             Form {
                 TextField("Name", text: $name)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
                 TextField("Email address", text: $emailAddress)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()

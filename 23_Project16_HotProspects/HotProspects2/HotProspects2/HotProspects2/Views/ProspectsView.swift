@@ -100,7 +100,7 @@ struct ProspectsView: View {
                     }
                 }
                 .sheet(isPresented: $isShowingScanner) {
-                    CodeScannerView(codeTypes: [.qr], simulatedData: "Dexter Ramos\nblitzdex27@gmail.com", completion: handleScanResult)
+                    CodeScannerView(codeTypes: [.qr], simulatedData: "Deks\ndeks@gmail.com", completion: handleScanResult)
                 }
                 .alert("Permission required", isPresented: $isShowingNotificationPermissionAlert) {
                     Button("Modify settings") {
