@@ -24,6 +24,7 @@ struct RotatableDraggableCardView: View {
                     removal?()
                 }
             })
+        
     }
     
     func rotationValue() -> Angle {

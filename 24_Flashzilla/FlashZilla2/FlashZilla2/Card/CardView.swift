@@ -8,16 +8,31 @@
 import SwiftUI
 
 struct CardView: View {
-    let card: Card
-    
+    @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    @State var offset: CGSize = .zero
     @State var isShowingAnswer: Bool = false
+    
+    let card: Card
+    var removal: (() -> Void)? = nil
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 25)
-                .fill(.white)
+                .fill(
+                    differentiateWithoutColor
+                    ? .white
+                    : .white
+                        .opacity(
+                            1 - (Double(abs(offset.width)) / 50.0)
+                        )
+                )
+                .background(
+                    differentiateWithoutColor
+                    ? nil
+                    : RoundedRectangle(cornerRadius: 25)
+                        .fill(backgroundFill)
+                )
                 .shadow(radius: 10)
-            
             VStack {
                 Text("\(card.prompt)")
                     .font(.largeTitle)
@@ -38,6 +53,55 @@ struct CardView: View {
         .onTapGesture {
             isShowingAnswer.toggle()
         }
+        .rotationEffect(rotationValue())
+//        .draggable(onX: true, onY: false, offset: $offset, shouldGoBack: true)
+        .offset(offset)
+        .opacity(opacityValue())
+        .animation(.bouncy, value: offset)
+        .gesture(DragGesture()
+            .onChanged { value in
+                offset = CGSize(width: value.translation.width, height: 0)
+            }
+            .onEnded { value in
+                offset = .zero
+            }
+        )
+ 
+        .onChange(of: offset, {
+            if abs(offset.width) > 300 {
+                removal?()
+            }
+        })
+    }
+    
+    var backgroundFill: Color {
+        if offset.width > 0 {
+            return .green
+        } else if offset.width < 0 {
+            return .red
+        } else {
+            return .clear
+        }
+    }
+    
+    func rotationValue() -> Angle {
+        let distance = 450.0
+        let angle = 90.0
+        
+        let anglePerDistance = angle / distance
+        let resultingAngle = offset.width * anglePerDistance
+        
+        return Angle(degrees: resultingAngle)
+    }
+    
+    func opacityValue() -> CGFloat {
+        let distance = 450.0
+        let opacity = 1.0
+        
+        let opacityPerDistance = opacity / distance
+        let resultingAngle = 1 - (abs(offset.width) * opacityPerDistance)
+        
+        return CGFloat(resultingAngle)
     }
 }
 
