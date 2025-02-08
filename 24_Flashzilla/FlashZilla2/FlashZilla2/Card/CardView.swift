@@ -14,7 +14,7 @@ struct CardView: View {
     @State var isShowingAnswer: Bool = false
     
     let card: Card
-    var removal: (() -> Void)? = nil
+    var removal: ((Bool) -> Void)? = nil
     
     var body: some View {
         ZStack {
@@ -27,12 +27,11 @@ struct CardView: View {
                             1 - (Double(abs(offset.width)) / 50.0)
                         )
                 )
-                .background(
+                .signedFilledBackground(offset.width, shape: {
                     differentiateWithoutColor
                     ? nil
                     : RoundedRectangle(cornerRadius: 25)
-                        .fill(backgroundFill)
-                )
+                })
                 .shadow(radius: 10)
             VStack {
                 if voiceOverEnabled {
@@ -69,15 +68,17 @@ struct CardView: View {
                 offset = CGSize(width: value.translation.width * 5, height: 0)
             }
             .onEnded { value in
+                let offsetWidth = offset.width
+                
+                if abs(offsetWidth) > 300 {
+                    removal?(offsetWidth > 0)
+                }
+                
                 offset = .zero
+                
             }
         )
  
-        .onChange(of: offset, {
-            if abs(offset.width) > 300 {
-                removal?()
-            }
-        })
     }
     
     var backgroundFill: Color {
@@ -111,6 +112,42 @@ struct CardView: View {
     }
 }
 
+/// Challenge: If you drag a card to the right but not far enough to remove it, then release, you see it turn red as it slides back to the center. Why does this happen and how can you fix it? (Tip: think about the way we set offset back to 0 immediately, even though the card hasn’t animated yet. You might solve this with a ternary within a ternary, but a custom modifier will be cleaner.)
+struct SignedFilledBackgroundModifier<S: Shape>: ViewModifier {
+    
+    var value: CGFloat
+    @ViewBuilder var shape: () -> S?
+    var positiveColor: Color = .green
+    var negativeColor: Color = .red
+    var neutralColor: Color = .clear
+    
+    func body(content: Content) -> some View {
+        content
+            .background {
+                if let s = shape() {
+                    s.fill(backgroundFill)
+                } else {
+                    EmptyView()
+                }
+            }
+    }
+    
+    var backgroundFill: Color {
+        if value > 0 {
+            return positiveColor
+        } else if value < 0 {
+            return negativeColor
+        } else {
+            return neutralColor
+        }
+    }
+}
+
+extension View {
+    func signedFilledBackground<S: Shape>(_ value: Double, @ViewBuilder shape: @escaping () -> S?) -> some View {
+        modifier(SignedFilledBackgroundModifier(value: value, shape: shape))
+    }
+}
 #Preview {
     CardView(card: .example)
 }

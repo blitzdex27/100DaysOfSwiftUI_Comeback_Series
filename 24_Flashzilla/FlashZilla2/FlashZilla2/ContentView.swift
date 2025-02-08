@@ -35,17 +35,37 @@ struct ContentView: View {
                     .clipShape(.capsule)
                 
                 ZStack {
-                    ForEach(0..<cards.count, id: \.self) { index in
-                        let card = cards[index]
-                        CardView(card: card, removal: {
+                    ForEach(Array(cards.enumerated()), id: \.1.id) { index, card in
+                        CardView(card: card, removal: { isCorrect in
                             withAnimation {
-                                remove(at: index)
+                                if isCorrect {
+                                    remove(at: index)
+                                } else {
+                                    /// Challenge 3: For a harder challenge: when the users gets an answer wrong, add that card back into the array so the user can try it again. Doing this successfully means rethinking the ForEach loop, because relying on simple integers isn’t enough – your cards need to be uniquely identifiable.
+                                    putBack(from: index)
+                                }
                             }
                         })
                         .stacked(at: index, total: cards.count, distance: 10)
                         .allowsHitTesting(cards.count - 1 == index)
                         .accessibilityHidden(index < cards.count - 1)
                     }
+                    
+//                    ForEach(0..<cards.count, id: \.self) { index in
+//                        let card = cards[index]
+//                        CardView(card: card, removal: { isCorrect in
+//                            withAnimation {
+//                                if isCorrect {
+//                                    remove(at: index)
+//                                } else {
+//                                    putBack(from: index)
+//                                }
+//                            }
+//                        })
+//                        .stacked(at: index, total: cards.count, distance: 10)
+//                        .allowsHitTesting(cards.count - 1 == index)
+//                        .accessibilityHidden(index < cards.count - 1)
+//                    }
                 }
                 .allowsHitTesting(timeRemaining > 0)
                 
@@ -157,6 +177,11 @@ struct ContentView: View {
             }
             
         }
+    }
+    
+    func putBack(from index: Int) {
+        let card = cards.remove(at: index)
+        cards.insert(card, at: 0)
     }
 }
 

@@ -56,6 +56,7 @@ struct EditCardView: View {
         let card = Card(prompt: newPrompt, answer: newAnswer)
         cards.insert(card, at: 0)
         saveData()
+        clearFields()
     }
     
     func done() {
@@ -83,6 +84,12 @@ struct EditCardView: View {
         } catch {
             
         }
+    }
+    
+    /// Challenge: When adding a card, the text fields keep their current text. Fix that so that the textfields clear themselves after a card is added.
+    func clearFields() {
+        newPrompt = ""
+        newAnswer = ""
     }
 }
 
