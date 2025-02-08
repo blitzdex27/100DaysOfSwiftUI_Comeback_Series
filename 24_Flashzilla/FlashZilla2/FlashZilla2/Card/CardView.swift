@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
     @State var offset: CGSize = .zero
     @State var isShowingAnswer: Bool = false
     
@@ -34,15 +35,19 @@ struct CardView: View {
                 )
                 .shadow(radius: 10)
             VStack {
-                Text("\(card.prompt)")
-                    .font(.largeTitle)
-                    .foregroundStyle(.black)
-                
-                if isShowingAnswer {
-                    Text("\(card.answer)")
-                        .font(.title)
-                        .foregroundStyle(.secondary)
-
+                if voiceOverEnabled {
+                    Text(isShowingAnswer ? card.answer : card.prompt)
+                } else {
+                    Text("\(card.prompt)")
+                        .font(.largeTitle)
+                        .foregroundStyle(.black)
+                    
+                    if isShowingAnswer {
+                        Text("\(card.answer)")
+                            .font(.title)
+                            .foregroundStyle(.secondary)
+                        
+                    }
                 }
             }
             .padding(20)
@@ -50,17 +55,18 @@ struct CardView: View {
    
         }
         .frame(width: 450, height: 250)
-        .onTapGesture {
-            isShowingAnswer.toggle()
-        }
         .rotationEffect(rotationValue())
 //        .draggable(onX: true, onY: false, offset: $offset, shouldGoBack: true)
         .offset(offset)
         .opacity(opacityValue())
         .animation(.bouncy, value: offset)
+        .accessibilityAddTraits(.isButton)
+        .onTapGesture {
+            isShowingAnswer.toggle()
+        }
         .gesture(DragGesture()
             .onChanged { value in
-                offset = CGSize(width: value.translation.width, height: 0)
+                offset = CGSize(width: value.translation.width * 5, height: 0)
             }
             .onEnded { value in
                 offset = .zero
