@@ -19,16 +19,3 @@ class Card: Hashable, Identifiable {
     }
     static let example = Card(prompt: "Who created this app?", answer: "Dexter")
 }
-
-
-
-@Model
-class CardV2: Hashable, Identifiable {
-    var question: String
-    var answer: String
-    init(prompt: String, answer: String) {
-        self.question = prompt
-        self.answer = answer
-    }
-    static let example = CardV2(prompt: "Who created this app?", answer: "Dexter")
-}

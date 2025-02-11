@@ -13,7 +13,7 @@ struct CardView: View {
     @State var offset: CGSize = .zero
     @State var isShowingAnswer: Bool = false
     
-    let card: CardV2
+    let card: Card
     var removal: ((Bool) -> Void)? = nil
     
     var body: some View {
@@ -35,9 +35,9 @@ struct CardView: View {
                 .shadow(radius: 10)
             VStack {
                 if voiceOverEnabled {
-                    Text(isShowingAnswer ? card.answer : card.question)
+                    Text(isShowingAnswer ? card.answer : card.prompt)
                 } else {
-                    Text("\(card.question)")
+                    Text("\(card.prompt)")
                         .font(.largeTitle)
                         .foregroundStyle(.black)
                     

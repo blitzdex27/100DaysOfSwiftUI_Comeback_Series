@@ -14,7 +14,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.cardStore) var cardStore
     
-    @State var cards = [CardV2]()
+    @State var cards = [Card]()
     @State var timeRemaining = 100
     @State var isActive: Bool = true
     @State private var isShowingEditScreen = false
