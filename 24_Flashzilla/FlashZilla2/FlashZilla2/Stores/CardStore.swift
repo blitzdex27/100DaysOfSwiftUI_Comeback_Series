@@ -10,7 +10,7 @@ import SwiftData
 /// Extra challenge: Try to find a way to centralize the loading and saving code for the cards. You might need to experiment a little to find something you like!
 @Observable
 class CardStore {
-    var cards: [Card] = []
+    var cards: [CardV2] = []
     var modelContext: ModelContext?
     
     init(modelContext: ModelContext? = nil) {
@@ -21,7 +21,7 @@ class CardStore {
     }
     
     func fetchCards(from context: ModelContext) {
-        let descriptor = FetchDescriptor<Card>()
+        let descriptor = FetchDescriptor<CardV2>()
         
         do {
             cards = try context.fetch(descriptor)
@@ -35,7 +35,7 @@ class CardStore {
         guard let modelContext else {
             return
         }
-        var cardsToDelete = [Card]()
+        var cardsToDelete = [CardV2]()
         offsets.forEach { index in
             cardsToDelete.append(cards[index])
         }
@@ -52,7 +52,7 @@ class CardStore {
         }
     }
     
-    func removeCards(_ cards: Set<Card>) {
+    func removeCards(_ cards: Set<CardV2>) {
         guard let modelContext else {
             return
         }
@@ -67,7 +67,7 @@ class CardStore {
         }
     }
     
-    func addCard(_ card: Card) {
+    func addCard(_ card: CardV2) {
         guard let modelContext else {
             return
         }

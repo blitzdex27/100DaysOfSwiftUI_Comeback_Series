@@ -15,7 +15,7 @@ struct EditCardView: View {
     @State var newPrompt = ""
     @State var newAnswer = ""
     
-    @State var selection = Set<Card>()
+    @State var selection = Set<CardV2>()
     @State var editMode: EditMode = .inactive
     
     @FocusState var isPromptFocused: Bool
@@ -33,7 +33,7 @@ struct EditCardView: View {
                     Section("Cards") {
                         ForEach(cardStore.cards.reversed()) { card in
                             VStack(alignment: .leading) {
-                                Text(card.prompt)
+                                Text(card.question)
                                     .font(.headline)
                                 Text(card.answer)
                                     .foregroundStyle(.secondary)
@@ -65,7 +65,7 @@ struct EditCardView: View {
               !trimmedAnswer.isEmpty else {
             return
         }
-        let card = Card(prompt: newPrompt, answer: newAnswer)
+        let card = CardV2(prompt: newPrompt, answer: newAnswer)
         cardStore.addCard(card)
         clearFields()
         isPromptFocused = true
