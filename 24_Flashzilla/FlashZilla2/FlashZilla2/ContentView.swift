@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
-    @State private var cards = [Card]()
-    @State var timeRemaining = 100
-
     @Environment(\.scenePhase) var scenePhase
-    @State private var isActive: Bool = true
+    @Environment(\.cardStore) var cardStore
     
+    @State var cards = [Card]()
+    @State var timeRemaining = 100
+    @State var isActive: Bool = true
     @State private var isShowingEditScreen = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -50,22 +51,6 @@ struct ContentView: View {
                         .allowsHitTesting(cards.count - 1 == index)
                         .accessibilityHidden(index < cards.count - 1)
                     }
-                    
-//                    ForEach(0..<cards.count, id: \.self) { index in
-//                        let card = cards[index]
-//                        CardView(card: card, removal: { isCorrect in
-//                            withAnimation {
-//                                if isCorrect {
-//                                    remove(at: index)
-//                                } else {
-//                                    putBack(from: index)
-//                                }
-//                            }
-//                        })
-//                        .stacked(at: index, total: cards.count, distance: 10)
-//                        .allowsHitTesting(cards.count - 1 == index)
-//                        .accessibilityHidden(index < cards.count - 1)
-//                    }
                 }
                 .allowsHitTesting(timeRemaining > 0)
                 
@@ -153,8 +138,9 @@ struct ContentView: View {
     }
     
     private func remove(at index: Int) {
-        guard index >= 0 else { return }
+        guard !cards.isEmpty else { return }
         cards.remove(at: index)
+        
         if cards.isEmpty {
             isActive = false
         }
@@ -168,15 +154,7 @@ struct ContentView: View {
     }
     
     func loadData() {
-        if let data = UserDefaults.standard.data(forKey: "Cards") {
-            do {
-                let decoded = try JSONDecoder().decode([Card].self, from: data)
-                cards = decoded
-            } catch {
-                
-            }
-            
-        }
+        cards = cardStore.cards
     }
     
     func putBack(from index: Int) {
