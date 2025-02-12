@@ -16,9 +16,13 @@ struct FlashZilla2App: App {
     var cardStore: CardStore
     
     init() {
-        let schema = Schema([Card.self])
-        self.sharedModelContainer = try! ModelContainer(for: schema)
-        self.cardStore = CardStore(modelContext: sharedModelContainer.mainContext)
+        do {
+            let schema = Schema([Card.self])
+            self.sharedModelContainer = try ModelContainer(for: schema, migrationPlan: CardsMigrationPlan.self)
+            self.cardStore = CardStore(modelContext: sharedModelContainer.mainContext)
+        } catch {
+            fatalError("Error: \(error)")
+        }
     }
     
     var body: some Scene {

@@ -19,6 +19,8 @@
 		34AB1A502D5B25CD00EB5310 /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB1A402D5B25CD00EB5310 /* CardStore.swift */; };
 		34AB1A512D5B25CD00EB5310 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB1A412D5B25CD00EB5310 /* ContentView.swift */; };
 		34AB1A522D5B25CD00EB5310 /* FlashZilla2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB1A422D5B25CD00EB5310 /* FlashZilla2App.swift */; };
+		34AB1A9C2D5BAF5900EB5310 /* CardsMigrationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB1A9B2D5BAF4900EB5310 /* CardsMigrationPlan.swift */; };
+		34AB1A9E2D5BB0B800EB5310 /* CardsMigrationStages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AB1A9D2D5BB0AE00EB5310 /* CardsMigrationStages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		34AB1A432D5B25CD00EB5310 /* logs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = logs.md; sourceTree = "<group>"; };
 		34AB1A442D5B25CD00EB5310 /* MagnifyGesture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MagnifyGesture.md; sourceTree = "<group>"; };
 		34AB1A452D5B25CD00EB5310 /* RotationGesture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RotationGesture.md; sourceTree = "<group>"; };
+		34AB1A9B2D5BAF4900EB5310 /* CardsMigrationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsMigrationPlan.swift; sourceTree = "<group>"; };
+		34AB1A9D2D5BB0AE00EB5310 /* CardsMigrationStages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsMigrationStages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -117,6 +121,7 @@
 		34AB1A382D5B25CD00EB5310 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				34AB1A9A2D5BAF4100EB5310 /* Migration */,
 				34AB1A372D5B25CD00EB5310 /* Card.swift */,
 			);
 			path = Models;
@@ -163,6 +168,15 @@
 				34AB1A402D5B25CD00EB5310 /* CardStore.swift */,
 			);
 			path = Stores;
+			sourceTree = "<group>";
+		};
+		34AB1A9A2D5BAF4100EB5310 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				34AB1A9B2D5BAF4900EB5310 /* CardsMigrationPlan.swift */,
+				34AB1A9D2D5BB0AE00EB5310 /* CardsMigrationStages.swift */,
+			);
+			path = Migration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,6 +328,8 @@
 			files = (
 				34AB1A4D2D5B25CD00EB5310 /* Card.swift in Sources */,
 				34AB1A4E2D5B25CD00EB5310 /* CardView.swift in Sources */,
+				34AB1A9C2D5BAF5900EB5310 /* CardsMigrationPlan.swift in Sources */,
+				34AB1A9E2D5BB0B800EB5310 /* CardsMigrationStages.swift in Sources */,
 				34AB1A4F2D5B25CD00EB5310 /* EditCardView.swift in Sources */,
 				34AB1A502D5B25CD00EB5310 /* CardStore.swift in Sources */,
 				34AB1A512D5B25CD00EB5310 /* ContentView.swift in Sources */,

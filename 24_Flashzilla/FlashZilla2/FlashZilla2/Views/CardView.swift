@@ -33,29 +33,42 @@ struct CardView: View {
                     : RoundedRectangle(cornerRadius: 25)
                 })
                 .shadow(radius: 10)
-            VStack {
-                if voiceOverEnabled {
-                    Text(isShowingAnswer ? card.answer : card.prompt)
-                } else {
-                    Text("\(card.prompt)")
-                        .font(.largeTitle)
-                        .foregroundStyle(.black)
+            ZStack {
+                VStack {
                     
-                    if isShowingAnswer {
-                        Text("\(card.answer)")
-                            .font(.title)
-                            .foregroundStyle(.secondary)
+                    if voiceOverEnabled {
+                        Text(isShowingAnswer ? card.answer : card.prompt)
+                    } else {
+                        Text("\(card.prompt)")
+                            .font(.largeTitle)
+                            .foregroundStyle(.black)
                         
+                        if isShowingAnswer {
+                            Text("\(card.answer)")
+                                .font(.title)
+                                .foregroundStyle(.secondary)
+                            
+                        }
                     }
+                    
                 }
+       
             }
             .padding(20)
             .multilineTextAlignment(.center)
-   
+            
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("Correct stat: \(card.correctCount)")
+                        .padding()
+                }
+            }
         }
         .frame(width: 450, height: 250)
         .rotationEffect(rotationValue())
-//        .draggable(onX: true, onY: false, offset: $offset, shouldGoBack: true)
+        //        .draggable(onX: true, onY: false, offset: $offset, shouldGoBack: true)
         .offset(offset)
         .opacity(opacityValue())
         .animation(.bouncy, value: offset)
@@ -78,7 +91,7 @@ struct CardView: View {
                 
             }
         )
- 
+        
     }
     
     var backgroundFill: Color {
