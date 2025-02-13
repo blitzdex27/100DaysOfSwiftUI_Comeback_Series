@@ -161,7 +161,14 @@ extension View {
         modifier(SignedFilledBackgroundModifier(value: value, shape: shape))
     }
 }
-//#Preview {
-//    
-//    CardView(card: .example)
-//}
+#Preview {
+    @Previewable var cardStore = CardStore(modelContext: PersistenceController.preview.container.viewContext)
+    @Previewable var card: Card = {
+        let card = Card(context: PersistenceController.preview.container.viewContext)
+        card.prompt = "What is 1 + 1?"
+        card.answer = "2"
+        return card
+    }()
+    CardView(card: card)
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .environment(\.cardStore, cardStore)}
