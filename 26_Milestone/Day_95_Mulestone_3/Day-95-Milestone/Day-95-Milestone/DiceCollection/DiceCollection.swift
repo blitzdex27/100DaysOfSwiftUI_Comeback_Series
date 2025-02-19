@@ -10,8 +10,6 @@ import SwiftData
 @Model
 class DiceCollection {
     var dice: [Dice]
-    
-    @MainActor
     var currentValue: Int {
         dice.getResultSum()
     }
@@ -24,20 +22,28 @@ class DiceCollection {
     func rollAll() {
         
         for dice in self.dice {
-            dice.currentValue = dice.roll()
+            dice.roll()
         }
     }
-
-    @MainActor
-    func reset() {
-        
-        for die in dice {
-            die.reset()
+    
+    
+    private func applyPaddingValues(on dice: Dice) async {
+        let maximumPadCount = Int.random(in: 4...(4 + Int(Double(dice.sideCount) * 0.2)))
+        let paddingValues: [Int] = Array(dice.sideValues.shuffled().prefix(Int.random(in: 1..<min(maximumPadCount, dice.sideCount))))
+        print("values: \(paddingValues)")
+        for paddingValue in paddingValues {
+            DispatchQueue.main.async {
+                dice.currentValue = paddingValue
+            }
+            try! await Task.sleep(for: .seconds(0.5))
         }
+    }
+    
+    func reset() {
+        dice.forEach { $0.reset() }
 //        currentValue = 0
     }
     
-    @MainActor
     func update(dieCount: Int, sideCount: Int) {
         dice = (0..<dieCount).map { _ in
             Dice.init(sideCount: sideCount)
@@ -47,7 +53,6 @@ class DiceCollection {
 }
 
 extension DiceCollection {
-    @MainActor
     convenience init(dieCount: Int, sideCount: Int) {
         let dice = (0..<dieCount).map { _ in
             Dice.init(sideCount: sideCount)
@@ -56,11 +61,11 @@ extension DiceCollection {
     }
 }
 
-//extension DiceCollection: CopyableProtocol {
-//    func copy() -> DiceCollection {
-//        let dice = dice.map({ $0.copy() })
-//        let collection = DiceCollection(dice: dice)
-////        collection.currentValue = currentValue
-//        return collection
-//    }
-//}
+extension DiceCollection: CopyableProtocol {
+    func copy() -> DiceCollection {
+        let dice = dice.map({ $0.copy() })
+        let collection = DiceCollection(dice: dice)
+//        collection.currentValue = currentValue
+        return collection
+    }
+}

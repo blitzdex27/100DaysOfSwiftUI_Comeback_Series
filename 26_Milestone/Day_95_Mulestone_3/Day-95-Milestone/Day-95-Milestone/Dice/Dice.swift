@@ -5,9 +5,7 @@
 //  Created by Dexter Ramos on 2/14/25.
 //
 import SwiftData
-import SwiftUI
 
-@MainActor
 @Model
 class Dice: Identifiable {
     var currentValue: Int = 0
@@ -35,7 +33,6 @@ extension Array where Element == Dice {
         return map(\.currentValue)
     }
     
-    @MainActor
     func getResultSum() -> Int {
         guard !isEmpty else {
             return 0

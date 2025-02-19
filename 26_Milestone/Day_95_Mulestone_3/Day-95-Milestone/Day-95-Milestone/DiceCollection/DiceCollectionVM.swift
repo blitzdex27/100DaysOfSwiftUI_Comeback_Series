@@ -29,10 +29,8 @@ class DiceCollectionVM {
         await withTaskGroup(of: Void.self) { group in
             for dice in diceCollection.dice {
                 group.addTask {
-                    let transientCount = await Int.random(in: 1...min(prefixMax, dice.sideCount))
-                    let transientValues: [Int] = await MainActor.run {
-                        (1...transientCount).map { _ in dice.roll() } 
-                    }// (1..<transientCount).map({ _ in dice.roll() })
+                    let transientCount = Int.random(in: 1...min(prefixMax, dice.sideCount))
+                    let transientValues = (1..<transientCount).map({ _ in dice.roll() })
                     
                     for transientValue in transientValues {
                         

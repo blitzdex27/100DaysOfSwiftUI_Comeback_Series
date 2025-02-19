@@ -13,7 +13,6 @@ class RollResult: Identifiable {
     var values: [Int]
     var diceCollection: DiceCollection
     
-    @MainActor
     init(diceCollection: DiceCollection) {
         self.result = diceCollection.currentValue
         self.values = diceCollection.dice.map(\.currentValue)
