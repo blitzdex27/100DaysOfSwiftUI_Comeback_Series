@@ -22,6 +22,7 @@
 		345EED722D666FFF00D23139 /* RollResultsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345EED712D666FFB00D23139 /* RollResultsVM.swift */; };
 		348CA0152D63ABB3009A3688 /* RollResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348CA0142D63ABAC009A3688 /* RollResult.swift */; };
 		348CA0172D63AE5F009A3688 /* RollResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348CA0162D63AE5F009A3688 /* RollResultsView.swift */; };
+		3499BA902D66E10E00E06B4C /* DiceConfigVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3499BA8F2D66E10A00E06B4C /* DiceConfigVM.swift */; };
 		34DD23602D647A0D0027A7F3 /* DiceConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DD235F2D647A0D0027A7F3 /* DiceConfigView.swift */; };
 		34DD23882D64ACB70027A7F3 /* DiceVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DD23872D64ACB20027A7F3 /* DiceVM.swift */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		345EED712D666FFB00D23139 /* RollResultsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollResultsVM.swift; sourceTree = "<group>"; };
 		348CA0142D63ABAC009A3688 /* RollResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollResult.swift; sourceTree = "<group>"; };
 		348CA0162D63AE5F009A3688 /* RollResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollResultsView.swift; sourceTree = "<group>"; };
+		3499BA8F2D66E10A00E06B4C /* DiceConfigVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceConfigVM.swift; sourceTree = "<group>"; };
 		34DD235F2D647A0D0027A7F3 /* DiceConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceConfigView.swift; sourceTree = "<group>"; };
 		34DD23872D64ACB20027A7F3 /* DiceVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				34DD235F2D647A0D0027A7F3 /* DiceConfigView.swift */,
+				3499BA8F2D66E10A00E06B4C /* DiceConfigVM.swift */,
 			);
 			path = DiceConfig;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				3448B91D2D5F894700C5644D /* DiceCollection.swift in Sources */,
 				34DD23602D647A0D0027A7F3 /* DiceConfigView.swift in Sources */,
 				348CA0172D63AE5F009A3688 /* RollResultsView.swift in Sources */,
+				3499BA902D66E10E00E06B4C /* DiceConfigVM.swift in Sources */,
 				345EED722D666FFF00D23139 /* RollResultsVM.swift in Sources */,
 				3448B9182D5F891A00C5644D /* DiceView.swift in Sources */,
 				34DD23882D64ACB70027A7F3 /* DiceVM.swift in Sources */,
@@ -522,6 +526,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Day-95-Milestone/Preview Content\"";
+				DEVELOPMENT_TEAM = YB2QWCYR88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -550,6 +555,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Day-95-Milestone/Preview Content\"";
+				DEVELOPMENT_TEAM = YB2QWCYR88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

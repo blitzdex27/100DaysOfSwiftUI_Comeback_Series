@@ -6,14 +6,16 @@
 //
 
 import SwiftUI
+import CoreHaptics
 
 struct DiceView: View {
+    @Environment(\.hapticEngine) var hapticEngine
     
     var rotation: Angle = .zero
     var scale: CGFloat = 1
     
     @State var vm: DiceVM
-    
+        
     init(dice: Dice) {
         self._vm = State(initialValue: DiceVM(dice: dice))
     }
@@ -42,6 +44,32 @@ struct DiceView: View {
 //                }
 //            }
 //        }
+        .onChange(of: vm.dice.currentValue) {
+            do {
+                
+                let intensity = Double(vm.dice.currentValue) / Double(vm.dice.sideCount)
+                let shapness = Double(vm.dice.currentValue) / Double(vm.dice.sideCount)
+                let event = CHHapticEvent(
+                    eventType: .hapticTransient,
+                    parameters: [
+                        .init(
+                            parameterID: .hapticIntensity,
+                            value: Float(intensity == 0 ? 1 : intensity)
+                        ),
+                        .init(
+                            parameterID: .hapticSharpness,
+                            value: Float(shapness)
+                        ),
+                    ],
+                    relativeTime: 0.1
+                )
+                let pattern = try! CHHapticPattern(events: [event], parameters: [])
+                let player = try hapticEngine?.makePlayer(with: pattern)
+                try player?.start(atTime: CHHapticTimeImmediate)
+            } catch {
+                print("Haptic error: \(error)")
+            }
+        }
     }
 }
 

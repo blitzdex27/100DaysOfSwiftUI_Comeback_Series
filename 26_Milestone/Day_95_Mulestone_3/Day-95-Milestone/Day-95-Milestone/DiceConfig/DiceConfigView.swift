@@ -9,35 +9,56 @@ import SwiftUI
 
 struct DiceConfigView: View {
     @Environment(\.dismiss) var dismiss
+            
+    @StateObject var vm: ViewModel
     
-    @Binding var diceCollection: DiceCollection
-    @State var numberOfDie: Int = 1
-    @State var numberOfSide: Int = 6
+    init(numberOfDie: Int = 1, numberOfSide: Int = 6, saveAction: @escaping (_ numberOfDie: Int, _ numberOfSide: Int) -> Void) {
+        self._vm = StateObject(wrappedValue: ViewModel(numberOfDie: numberOfDie, numberOfSide: numberOfSide, saveAction: saveAction))
+    }
+    
+    @State var pickerOptionsDieCount: [Int] = {
+        (1...100).filter({
+            let square = sqrt(Double($0))
+            let rounded = Double(Int(square))
+            return square == rounded
+            
+        })
+    }()
+    
+    @State var pickerOptionsSideCount: [Int] = [4, 6, 8, 10, 12, 20, 100]
+    
     var body: some View {
         Form {
-            Picker("Number of Die", selection: $numberOfDie) {
-                ForEach(1..<101) { count in
-                    Text("\(count)")
-                        .tag(count)
+            Section("Select Number of Die") {
+                Picker("Number of Die", selection: $vm.numberOfDie) {
+                    ForEach(pickerOptionsDieCount, id: \.self) { count in
+                        Text("\(count)")
+                            .tag(count)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
+            Section("Select Number of side") {
+                Picker("Number of side", selection: $vm.numberOfSide) {
+                    ForEach(pickerOptionsSideCount, id:\.self) { side in
+                        Text("\(side)")
+                            .tag(side)
+                    }
                 }
             }
-            Picker("Number of side", selection: $numberOfSide) {
-                ForEach(1..<101) { side in
-                    Text("\(side)")
-                        .tag(side)
-                }
-            }
+            .pickerStyle(.segmented)
         }
         .toolbar {
             Button("Done") {
-                diceCollection.update(dieCount: numberOfDie, sideCount: numberOfSide)
+                vm.saveConfig()
                 dismiss.callAsFunction()
             }
         }
     }
 }
 
-#Preview {
-    @Previewable @State var diceCollection = DiceCollection(dieCount: 6, sideCount: 6)
-    DiceConfigView(diceCollection: $diceCollection)
-}
+//#Preview {
+//    @Previewable @State var diceCollection = DiceCollection(dieCount: 6, sideCount: 6)
+//    DiceConfigView(diceCollection: $diceCollection)
+//}

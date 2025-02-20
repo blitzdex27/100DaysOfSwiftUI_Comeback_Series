@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
 
     @State var isRolling: Bool = false
+    @State var canReset: Bool = false
     @State var showingResults: Bool = false
     @State var showingConfig: Bool = false
     
@@ -29,12 +30,13 @@ struct ContentView: View {
                 DiceCollectionView(
                     isRolling: $isRolling,
                     collection: vm.diceCollection,
-                    didEndRolling: vm.saveRollResult
+                    didEndRolling: didEndRolling
                 )
+                .allowsHitTesting(!isRolling)
                 .onTapGesture {
-                    if isRolling {
+                    if canReset {
                         reset()
-                    } else {
+                    } else if !canReset && !isRolling {
                         isRolling = true
                     }
                     
@@ -58,13 +60,13 @@ struct ContentView: View {
             .sheet(isPresented: $showingConfig) {
                 NavigationStack {
                     
-                    DiceConfigView(
-                        diceCollection: Binding(
-                            get: { vm.diceCollection },
-                            set: { vm.diceCollection = $0 }
-                        )
-                    )
+                    DiceConfigView(numberOfDie: vm.diceCollection.dice.count, numberOfSide: vm.diceCollection.dice[0].sideCount) { numberOfDie, numberOfSide in
+                        vm.diceCollection.update(dieCount: numberOfDie, sideCount: numberOfSide)
+                        isRolling = false
+                        canReset = false
+                    }
                 }
+                .presentationDetents([.medium])
             }
         }
 
@@ -74,6 +76,12 @@ struct ContentView: View {
     func reset() {
         vm.reset()
         isRolling = false
+        canReset = false
+    }
+    
+    func didEndRolling() {
+        vm.saveRollResult()
+        canReset = true
     }
 }
 

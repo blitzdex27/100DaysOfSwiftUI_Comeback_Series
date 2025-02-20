@@ -67,6 +67,7 @@ struct DiceCollectionView: View {
 //                    vm.rollAll()
                     await vm.dynamicRoll()
                    didEndRolling()
+                    isRolling = false
                 }
             }
         }

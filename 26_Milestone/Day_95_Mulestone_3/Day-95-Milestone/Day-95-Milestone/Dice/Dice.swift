@@ -7,7 +7,7 @@
 import SwiftData
 import SwiftUI
 
-@MainActor
+
 @Model
 class Dice: Identifiable {
     var currentValue: Int = 0
@@ -20,11 +20,13 @@ class Dice: Identifiable {
     }
     
     @discardableResult
+    @MainActor
     func roll() -> Int {
         let result = sideValues.randomElement()!
         return result
     }
     
+    @MainActor
     func reset() {
         currentValue = 0
     }
@@ -46,10 +48,10 @@ extension Array where Element == Dice {
     }
 }
 
-extension Dice: CopyableProtocol {
-    func copy() -> Dice {
-        let diceCopy = Dice(sideCount: sideCount)
-        diceCopy.currentValue = currentValue
-        return diceCopy
-    }
-}
+//extension Dice: CopyableProtocol {
+//    func copy() -> Dice {
+//        let diceCopy = Dice(sideCount: sideCount)
+//        diceCopy.currentValue = currentValue
+//        return diceCopy
+//    }
+//}
