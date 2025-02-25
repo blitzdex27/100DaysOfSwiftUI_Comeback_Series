@@ -9,11 +9,12 @@ import SwiftUI
 
 struct DiceConfigView: View {
     @Environment(\.dismiss) var dismiss
-            
+        
     @StateObject var vm: ViewModel
     
-    init(numberOfDie: Int = 1, numberOfSide: Int = 6, saveAction: @escaping (_ numberOfDie: Int, _ numberOfSide: Int) -> Void) {
-        self._vm = StateObject(wrappedValue: ViewModel(numberOfDie: numberOfDie, numberOfSide: numberOfSide, saveAction: saveAction))
+    init(config: Config = Config(), saveAction: @escaping (Config) -> Void) {
+        let configCopy = config.copy()
+        self._vm = StateObject(wrappedValue: ViewModel(config: configCopy, saveAction: saveAction))
     }
     
     @State var pickerOptionsDieCount: [Int] = {
@@ -30,7 +31,7 @@ struct DiceConfigView: View {
     var body: some View {
         Form {
             Section("Select Number of Die") {
-                Picker("Number of Die", selection: $vm.numberOfDie) {
+                Picker("Number of Die", selection: $vm.config.numberOfDie) {
                     ForEach(pickerOptionsDieCount, id: \.self) { count in
                         Text("\(count)")
                             .tag(count)
@@ -40,7 +41,7 @@ struct DiceConfigView: View {
             }
 
             Section("Select Number of side") {
-                Picker("Number of side", selection: $vm.numberOfSide) {
+                Picker("Number of side", selection: $vm.config.numberOfSide) {
                     ForEach(pickerOptionsSideCount, id:\.self) { side in
                         Text("\(side)")
                             .tag(side)
@@ -48,6 +49,11 @@ struct DiceConfigView: View {
                 }
             }
             .pickerStyle(.segmented)
+            
+            Section("Interactivity") {
+                Toggle("Haptics", isOn: $vm.config.isHapticsEnabled)
+                Toggle("Flip animation", isOn: $vm.config.isFlipAnimationEnabled)
+            }
         }
         .toolbar {
             Button("Done") {

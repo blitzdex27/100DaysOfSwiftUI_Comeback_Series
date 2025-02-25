@@ -11,13 +11,23 @@ extension RollResultsView {
     
     @Observable
     class ViewModel {
+        var store: RollResultStore?
+        
+        init(store: RollResultStore?) {
+            self.store = store
+        }
+        
         var rollResults: [RollResult] {
-            RollResultStore.shared.rollResults
+            store?.rollResults ?? []
+        }
+        
+        func fetchResults() {
+            store?.fetchResults()
         }
         
         func clear() {
-            RollResultStore.shared.clearAll()
-            RollResultStore.shared.fetchResults()
+            store?.clearAll()
+            store?.fetchResults()
         }
     }
 }

@@ -8,14 +8,21 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct ContentView<VM: ContentVMProtocol>: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.rollResultStore) private var store
+    @Environment(\.config) private var config
 
     @State var isRolling: Bool = false
     @State var canReset: Bool = false
     @State var showingResults: Bool = false
     @State var showingConfig: Bool = false
     
-    @State var vm: ContentVM = ContentVM()
+    @StateObject var vm: VM
+    
+    init(viewModel: VM) {
+        _vm = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         @Bindable var diceCollection = vm.diceCollection
@@ -32,6 +39,8 @@ struct ContentView: View {
                     collection: vm.diceCollection,
                     didEndRolling: didEndRolling
                 )
+                .accessibilityAddTraits(.isButton)
+                .accessibilityHint(Text("Dice collection of \(config.numberOfDie) dice. Tap to roll"), isEnabled: !isRolling)
                 .allowsHitTesting(!isRolling)
                 .onTapGesture {
                     if canReset {
@@ -53,21 +62,26 @@ struct ContentView: View {
             .sheet(isPresented: $showingResults) {
 
                 NavigationStack {
-                    RollResultsView()
+                    RollResultsView(viewModel: RollResultsView.ViewModel(store: store))
                 }
                 .presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $showingConfig) {
                 NavigationStack {
                     
-                    DiceConfigView(numberOfDie: vm.diceCollection.dice.count, numberOfSide: vm.diceCollection.dice[0].sideCount) { numberOfDie, numberOfSide in
-                        vm.diceCollection.update(dieCount: numberOfDie, sideCount: numberOfSide)
+                    DiceConfigView(config: config) { config in
+
+                        vm.updateCollection(dieCount: config.numberOfDie, sideCount: .constant(config.numberOfSide))
+                        self.config.update(with: config)
                         isRolling = false
                         canReset = false
                     }
                 }
                 .presentationDetents([.medium])
             }
+        }
+        .onAppear {
+            vm.store.modelContext = modelContext
         }
 
     }
@@ -80,11 +94,18 @@ struct ContentView: View {
     }
     
     func didEndRolling() {
+        let resultAnnouncement = "The result of rolling \(config.numberOfDie) dice is \(vm.diceCollection.currentValue)."
+        
+        let tapToResetAnnouncement = "Double tap to reset."
+        let announcement = "\(resultAnnouncement) \(tapToResetAnnouncement)"
+        UIAccessibility.post(notification: .announcement, argument: announcement)
+        
         vm.saveRollResult()
         canReset = true
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: .defaultVM(store: .defaultValue))
+
 }

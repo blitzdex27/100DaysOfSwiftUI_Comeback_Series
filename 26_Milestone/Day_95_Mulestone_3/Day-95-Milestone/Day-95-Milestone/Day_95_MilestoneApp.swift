@@ -8,17 +8,13 @@
 import SwiftUI
 import SwiftData
 import CoreHaptics
+import UniformTypeIdentifiers
 
 @main
 struct Day_95_MilestoneApp: App {
-    let container: ModelContainer
     var hapticEngine: CHHapticEngine?
-    
+    @StateObject private var config = Config()
     init() {
-        let config = ModelConfiguration()
-        let scheme = Schema([RollResult.self])
-        container = try! ModelContainer(for: scheme, configurations: config)
-        RollResultStore.shared.configure(modelContext: container.mainContext)
         do {
             hapticEngine = try CHHapticEngine()
             try hapticEngine?.start()
@@ -28,25 +24,16 @@ struct Day_95_MilestoneApp: App {
     }
     
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .modelContainer(container)
-                .environment(\.hapticEngine, hapticEngine)
+
+        DocumentGroup(editing: RollResult.self,  contentType: .results) {
+            ContentWrapperView()
+                            .environment(\.hapticEngine, hapticEngine)
+                            .environment(\.config, config)
         }
+
     }
 }
 
-extension CHHapticEngine: @retroactive EnvironmentKey {
-    public static var defaultValue: CHHapticEngine? = try? CHHapticEngine()
-}
-
-extension EnvironmentValues {
-    var hapticEngine: CHHapticEngine? {
-        get {
-            self[CHHapticEngine.self]
-        }
-        set {
-            self[CHHapticEngine.self] = newValue
-        }
-    }
+extension UTType {
+    static var results = UTType(exportedAs: "com.dekideks.100DaysSwiftUI.Day-95-Milestone.results")
 }

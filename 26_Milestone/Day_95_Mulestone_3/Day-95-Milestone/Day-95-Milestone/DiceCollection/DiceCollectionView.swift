@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DiceCollectionView: View {
+    @Environment(\.colorScheme) private var colorScheme
     
     @Binding var isRolling: Bool
     @State var vm: DiceCollectionVM
@@ -38,7 +39,7 @@ struct DiceCollectionView: View {
         ForEach(vm.diceCollection.dice) { dice in
             DiceView(dice: dice)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(radius: 5)
+                .shadow(color: colorScheme == .light ? .black.opacity(0.33) : .white.opacity(0.33), radius: 5)
 
         }
     }
@@ -64,7 +65,7 @@ struct DiceCollectionView: View {
         .onChange(of: isRolling) {
             if isRolling {
                 Task {
-//                    vm.rollAll()
+//                    vm.rollAll()a
                     await vm.dynamicRoll()
                    didEndRolling()
                     isRolling = false
@@ -76,7 +77,7 @@ struct DiceCollectionView: View {
 
 #Preview {
     @Previewable @State var isRolling = false
-    @Previewable @State var diceCollection = DiceCollection(dieCount: 1, sideCount: 6)
+    @Previewable @State var diceCollection = DiceCollection(dieCount: 1, sideCount: .constant(6))
     DiceCollectionView(
         isRolling: $isRolling,
         collection: diceCollection) {

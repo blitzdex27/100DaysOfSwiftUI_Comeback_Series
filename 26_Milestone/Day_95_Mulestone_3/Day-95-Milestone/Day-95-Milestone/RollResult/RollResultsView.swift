@@ -9,21 +9,24 @@ import SwiftUI
 import SwiftData
 
 struct RollResultsView: View {
-    @Environment(\.modelContext) var modelContext
-
-    @State var vm = ViewModel()
+    @State var vm: ViewModel
+    @Query(sort: \RollResult.persistentModelID, order: .reverse) var rollResults: [RollResult]
+    
+    init(viewModel: ViewModel) {
+        _vm = State(initialValue: viewModel)
+    }
     
     var body: some View {
 
         VStack {
-            if vm.rollResults.isEmpty {
+            if rollResults.isEmpty {
                
                     Text("No results yet.")
                     .font(.caption)
                 
             } else {
                 List {
-                    ForEach(vm.rollResults) { result in
+                    ForEach(rollResults) { result in
                         HStack {
                             Text("\(result.result)")
                                 .font(.callout)
@@ -37,7 +40,7 @@ struct RollResultsView: View {
                 }
             }
         }
-        .onAppear(perform: RollResultStore.shared.fetchResults)
+        .onAppear(perform: vm.fetchResults)
         .toolbar {
             Button("Clear", action: vm.clear)
         }
@@ -53,6 +56,6 @@ struct RollResultsView: View {
         }
     }
         .sheet(isPresented: $isPresented) {
-            RollResultsView()
+            RollResultsView(viewModel: .init(store: .defaultValue))
         }
 }

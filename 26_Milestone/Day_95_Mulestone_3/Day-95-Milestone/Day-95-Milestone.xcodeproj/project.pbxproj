@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3444346D2D6787AB00E86F42 /* ContentVMProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3444346C2D6787A600E86F42 /* ContentVMProtocol.swift */; };
+		3444346F2D67998D00E86F42 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3444346E2D67998800E86F42 /* Environments.swift */; };
+		344434742D67A0E000E86F42 /* SpecialCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344434732D67A0D800E86F42 /* SpecialCodable.swift */; };
 		3448B9152D5F891A00C5644D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448B90F2D5F891A00C5644D /* ContentView.swift */; };
 		3448B9162D5F891A00C5644D /* Day_95_MilestoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448B9102D5F891A00C5644D /* Day_95_MilestoneApp.swift */; };
 		3448B9172D5F891A00C5644D /* Dice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448B9112D5F891A00C5644D /* Dice.swift */; };
@@ -15,6 +18,8 @@
 		3448B91B2D5F891A00C5644D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3448B90E2D5F891A00C5644D /* Assets.xcassets */; };
 		3448B91D2D5F894700C5644D /* DiceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448B91C2D5F894200C5644D /* DiceCollection.swift */; };
 		3448B91F2D5FA15600C5644D /* DiceCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448B91E2D5FA15600C5644D /* DiceCollectionView.swift */; };
+		345EB5D42D68D4E700E1184E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345EB5D32D68D4E700E1184E /* LoadingView.swift */; };
+		345EB5D92D68FBC400E1184E /* ContentWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345EB5D82D68FBC400E1184E /* ContentWrapperView.swift */; };
 		345EED5B2D65CEF500D23139 /* DiceCollectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345EED5A2D65CEE800D23139 /* DiceCollectionVM.swift */; };
 		345EED602D65E38000D23139 /* CopyableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345EED5F2D65E36000D23139 /* CopyableProtocol.swift */; };
 		345EED672D66679100D23139 /* ContentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345EED662D66678C00D23139 /* ContentVM.swift */; };
@@ -23,6 +28,7 @@
 		348CA0152D63ABB3009A3688 /* RollResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348CA0142D63ABAC009A3688 /* RollResult.swift */; };
 		348CA0172D63AE5F009A3688 /* RollResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348CA0162D63AE5F009A3688 /* RollResultsView.swift */; };
 		3499BA902D66E10E00E06B4C /* DiceConfigVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3499BA8F2D66E10A00E06B4C /* DiceConfigVM.swift */; };
+		3499BA932D67165B00E06B4C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3499BA922D67164C00E06B4C /* Config.swift */; };
 		34DD23602D647A0D0027A7F3 /* DiceConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DD235F2D647A0D0027A7F3 /* DiceConfigView.swift */; };
 		34DD23882D64ACB70027A7F3 /* DiceVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DD23872D64ACB20027A7F3 /* DiceVM.swift */; };
 /* End PBXBuildFile section */
@@ -45,6 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3444346C2D6787A600E86F42 /* ContentVMProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVMProtocol.swift; sourceTree = "<group>"; };
+		3444346E2D67998800E86F42 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
+		344434732D67A0D800E86F42 /* SpecialCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialCodable.swift; sourceTree = "<group>"; };
 		3448B90C2D5F891A00C5644D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3448B90E2D5F891A00C5644D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3448B90F2D5F891A00C5644D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +65,9 @@
 		3457E8092D5F445A0018D963 /* Day-95-Milestone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Day-95-Milestone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3457E8192D5F445B0018D963 /* Day-95-MilestoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Day-95-MilestoneTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3457E8232D5F445B0018D963 /* Day-95-MilestoneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Day-95-MilestoneUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		345EB5D32D68D4E700E1184E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		345EB5D52D68DDF000E1184E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		345EB5D82D68FBC400E1184E /* ContentWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWrapperView.swift; sourceTree = "<group>"; };
 		345EED5A2D65CEE800D23139 /* DiceCollectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceCollectionVM.swift; sourceTree = "<group>"; };
 		345EED5F2D65E36000D23139 /* CopyableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableProtocol.swift; sourceTree = "<group>"; };
 		345EED662D66678C00D23139 /* ContentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVM.swift; sourceTree = "<group>"; };
@@ -64,6 +76,7 @@
 		348CA0142D63ABAC009A3688 /* RollResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollResult.swift; sourceTree = "<group>"; };
 		348CA0162D63AE5F009A3688 /* RollResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollResultsView.swift; sourceTree = "<group>"; };
 		3499BA8F2D66E10A00E06B4C /* DiceConfigVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceConfigVM.swift; sourceTree = "<group>"; };
+		3499BA922D67164C00E06B4C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		34DD235F2D647A0D0027A7F3 /* DiceConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceConfigView.swift; sourceTree = "<group>"; };
 		34DD23872D64ACB20027A7F3 /* DiceVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +119,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		344434702D679AB100E86F42 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				3448B90F2D5F891A00C5644D /* ContentView.swift */,
+				345EED662D66678C00D23139 /* ContentVM.swift */,
+				3444346C2D6787A600E86F42 /* ContentVMProtocol.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		3448B90D2D5F891A00C5644D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,11 +140,16 @@
 		3448B9142D5F891A00C5644D /* Day-95-Milestone */ = {
 			isa = PBXGroup;
 			children = (
+				345EB5D52D68DDF000E1184E /* Info.plist */,
 				3448B90D2D5F891A00C5644D /* Preview Content */,
 				3448B90E2D5F891A00C5644D /* Assets.xcassets */,
 				3448B9102D5F891A00C5644D /* Day_95_MilestoneApp.swift */,
-				3448B90F2D5F891A00C5644D /* ContentView.swift */,
-				345EED662D66678C00D23139 /* ContentVM.swift */,
+				344434702D679AB100E86F42 /* Content */,
+				3499BA922D67164C00E06B4C /* Config.swift */,
+				345EB5D82D68FBC400E1184E /* ContentWrapperView.swift */,
+				345EB5D32D68D4E700E1184E /* LoadingView.swift */,
+				3444346E2D67998800E86F42 /* Environments.swift */,
+				344434732D67A0D800E86F42 /* SpecialCodable.swift */,
 				345EED682D666B7600D23139 /* Store */,
 				345EED652D66642900D23139 /* DiceConfig */,
 				345EED642D6663FC00D23139 /* RollResult */,
@@ -354,18 +382,24 @@
 				3448B9152D5F891A00C5644D /* ContentView.swift in Sources */,
 				3448B91F2D5FA15600C5644D /* DiceCollectionView.swift in Sources */,
 				345EED602D65E38000D23139 /* CopyableProtocol.swift in Sources */,
+				3499BA932D67165B00E06B4C /* Config.swift in Sources */,
+				344434742D67A0E000E86F42 /* SpecialCodable.swift in Sources */,
 				348CA0152D63ABB3009A3688 /* RollResult.swift in Sources */,
+				3444346F2D67998D00E86F42 /* Environments.swift in Sources */,
 				3448B9162D5F891A00C5644D /* Day_95_MilestoneApp.swift in Sources */,
+				345EB5D92D68FBC400E1184E /* ContentWrapperView.swift in Sources */,
 				345EED672D66679100D23139 /* ContentVM.swift in Sources */,
 				3448B9172D5F891A00C5644D /* Dice.swift in Sources */,
 				3448B91D2D5F894700C5644D /* DiceCollection.swift in Sources */,
 				34DD23602D647A0D0027A7F3 /* DiceConfigView.swift in Sources */,
 				348CA0172D63AE5F009A3688 /* RollResultsView.swift in Sources */,
+				3444346D2D6787AB00E86F42 /* ContentVMProtocol.swift in Sources */,
 				3499BA902D66E10E00E06B4C /* DiceConfigVM.swift in Sources */,
 				345EED722D666FFF00D23139 /* RollResultsVM.swift in Sources */,
 				3448B9182D5F891A00C5644D /* DiceView.swift in Sources */,
 				34DD23882D64ACB70027A7F3 /* DiceVM.swift in Sources */,
 				345EED6A2D666BA000D23139 /* RollResultStore.swift in Sources */,
+				345EB5D42D68D4E700E1184E /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +563,7 @@
 				DEVELOPMENT_TEAM = YB2QWCYR88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Day-95-Milestone/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -558,6 +593,7 @@
 				DEVELOPMENT_TEAM = YB2QWCYR88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Day-95-Milestone/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

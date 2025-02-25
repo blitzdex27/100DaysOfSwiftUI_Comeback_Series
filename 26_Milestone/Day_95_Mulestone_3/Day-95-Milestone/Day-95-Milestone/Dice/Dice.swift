@@ -32,12 +32,31 @@ class Dice: Identifiable {
     }
 }
 
+extension Dice: SpecialCodable {
+    func toCodable() -> CodableType {
+        CodableType(
+            currentValue: currentValue,
+            sideCount: sideCount,
+            sideValues: sideValues
+        )
+    }
+    
+    static func fromCodable(_ codable: CodableType) -> Dice {
+        Dice(sideCount: codable.sideCount)
+    }
+    
+    struct CodableType: Codable {
+        var currentValue: Int = 0
+        var sideCount: Int
+        var sideValues: [Int]
+    }
+}
+
 extension Array where Element == Dice {
     func getResults() -> [Int] {
         return map(\.currentValue)
     }
     
-    @MainActor
     func getResultSum() -> Int {
         guard !isEmpty else {
             return 0

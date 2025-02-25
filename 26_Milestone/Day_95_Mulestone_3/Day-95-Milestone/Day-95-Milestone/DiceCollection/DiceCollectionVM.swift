@@ -19,7 +19,10 @@ class DiceCollectionVM {
     
     @MainActor
     func rollAll() {
-        diceCollection.rollAll()
+        diceCollection.rollAll { [weak self] _ in
+            guard let self else { return }
+            diceCollection.currentValue = diceCollection.dice.getResultSum()
+        }
     }
     
     func dynamicRoll() async {
@@ -38,11 +41,13 @@ class DiceCollectionVM {
                         
                         await MainActor.run {
                             dice.currentValue = transientValue
+                            self.diceCollection.currentValue = self.diceCollection.dice.getResultSum()
                         }
                         try! await Task.sleep(for: .seconds(0.2))
                     }
                         await MainActor.run {
                             dice.currentValue = dice.roll()
+                            self.diceCollection.currentValue = self.diceCollection.dice.getResultSum()
                         }
       
                     

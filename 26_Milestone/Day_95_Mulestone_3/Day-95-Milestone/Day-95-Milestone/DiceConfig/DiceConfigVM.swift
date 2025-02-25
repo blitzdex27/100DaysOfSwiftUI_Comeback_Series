@@ -8,18 +8,16 @@ import SwiftUI
 
 extension DiceConfigView {
     class ViewModel: ObservableObject {
-        @Published var numberOfDie: Int = 1
-        @Published var numberOfSide: Int = 6
-        let saveAction: (_ numberOfDie: Int, _ numberOfSide: Int) -> Void
+        @Published var config: Config
+        let saveAction: (Config) -> Void
         
-        init(numberOfDie: Int = 1, numberOfSide: Int = 1, saveAction: @escaping (_ numberOfDie: Int, _ numberOfSide: Int) -> Void) {
-            self.numberOfDie = numberOfDie
-            self.numberOfSide = numberOfSide
+        init(config: Config, saveAction: @escaping (Config) -> Void) {
+            self.config = config
             self.saveAction = saveAction
         }
         
         func saveConfig() {
-            saveAction(numberOfDie, numberOfSide)
+            saveAction(config)
         }
     }
 }

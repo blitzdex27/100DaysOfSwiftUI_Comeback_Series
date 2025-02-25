@@ -10,57 +10,92 @@ import SwiftData
 @Model
 class DiceCollection {
     var dice: [Dice]
-    
-    @MainActor
-    var currentValue: Int {
-        dice.getResultSum()
-    }
+    var dieCount: Int
+//    @Transient var sideCount: SideCount = .constant(6)
+    var currentValue: Int
     
     init(dice: [Dice]) {
         self.dice = dice
+        self.dieCount = dice.count
+        self.currentValue = dice.getResultSum()
+    }
+    
+    init(dieCount: Int, sideCount: SideCount) {
+        self.dieCount = dieCount
+//        self.sideCount = sideCount
+        
+        let dice = (0..<dieCount).map { _ in
+            Dice(sideCount: sideCount.getCount())
+        }
+        self.dice = dice
+        self.currentValue = dice.getResultSum()
     }
     
     @MainActor
-    func rollAll() {
+    func rollAll(eachCompletion: ((Dice) -> Void)? = nil) {
         
         for dice in self.dice {
             dice.currentValue = dice.roll()
+            eachCompletion?(dice)
         }
     }
 
     @MainActor
     func reset() {
-        
         for die in dice {
             die.reset()
         }
-//        currentValue = 0
+        currentValue = dice.getResultSum()
     }
     
     @MainActor
-    func update(dieCount: Int, sideCount: Int) {
+    func update(dieCount: Int, sideCount: SideCount) {
+        self.dieCount = dieCount
+//        self.sideCount = sideCount
+        
+        
         dice = (0..<dieCount).map { _ in
-            Dice.init(sideCount: sideCount)
+            Dice(sideCount: sideCount.getCount())
         }
-//        currentValue = 0
     }
 }
+
+extension DiceCollection: SpecialCodable {
+    func toCodable() -> Codabletype {
+        Codabletype(
+            dice: dice.map { $0.toCodable() },
+            dieCount: dieCount,
+            currentValue: currentValue
+        )
+    }
+    
+    static func fromCodable(_ codable: Codabletype) -> DiceCollection {
+        DiceCollection(dice: codable.dice.map { Dice.fromCodable($0) })
+    }
+    
+    struct Codabletype: Codable {
+        var dice: [Dice.CodableType]
+        var dieCount: Int
+        var currentValue: Int
+    }
+    
+}
+
 
 extension DiceCollection {
-    @MainActor
-    convenience init(dieCount: Int, sideCount: Int) {
-        let dice = (0..<dieCount).map { _ in
-            Dice.init(sideCount: sideCount)
+    class SideCount {
+        var getCount: () -> Int
+        
+        init(_ getCount: @escaping () -> Int) {
+            self.getCount = getCount
         }
-        self.init(dice: dice)
+        
+        static func constant(_ count: Int) -> SideCount {
+            SideCount { count }
+        }
+        
+        static func random(in range: ClosedRange<Int>) -> SideCount {
+            SideCount { Int.random(in: range) }
+        }
     }
 }
-
-//extension DiceCollection: CopyableProtocol {
-//    func copy() -> DiceCollection {
-//        let dice = dice.map({ $0.copy() })
-//        let collection = DiceCollection(dice: dice)
-////        collection.currentValue = currentValue
-//        return collection
-//    }
-//}
