@@ -10,10 +10,16 @@ import SwiftUI
 
 struct ContentView: View {
     
+    enum SortOrder {
+        case normal
+        case alphabetical
+        case country
+    }
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
     @State private var favorites = Favorites()
     @State private var searchText = ""
+    @State private var sortOrder: SortOrder = .normal
     
     var filteredResort: [Resort] {
         if searchText.isEmpty {
@@ -23,9 +29,25 @@ struct ContentView: View {
         }
     }
     
+    /// Challenge 3: For a real challenge, let the user sort the resorts in ContentView either using the default order, alphabetical order, or country order.
+    var sortedResorts: [Resort] {
+        switch sortOrder {
+        case .normal:
+            filteredResort
+        case .alphabetical:
+            filteredResort.sorted { r1, r2 in
+                r1.name < r2.name
+            }
+        case .country:
+            filteredResort.sorted { r1, r2 in
+                r1.country < r2.country
+            }
+        }
+    }
+    
     var body: some View {
         NavigationSplitView {
-            List(filteredResort) { resort in
+            List(sortedResorts) { resort in
                 NavigationLink(value: resort) {
                     HStack {
                         Image(resort.country)
@@ -58,6 +80,20 @@ struct ContentView: View {
                 ResortView(resort: resort)
             }
             .searchable(text: $searchText, prompt: "Search for a resort")
+            .toolbar {
+                Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                    Button("Normal") {
+                        sortOrder = .normal
+                    }
+                    Button("Name") {
+                        sortOrder = .alphabetical
+                    }
+                    Button("Country") {
+                        sortOrder = .country
+                    }
+                    
+                }
+            }
         } detail: {
             WelcomeView()
         }
